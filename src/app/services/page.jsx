@@ -74,26 +74,26 @@ const TestsServicesPage = () => {
     },
   ];
 
-  const services = [
+   const services = [
     {
       name: "Home Sample Collection",
       icon: "🏠",
-      desc: "Convenient at-home sample collection by trained phlebotomists",
+      desc: "Convenient at-home blood, urine, or swab collection by certified phlebotomists with strict hygiene protocols",
     },
     {
-      name: "Emergency Testing Support",
-      icon: "🚨",
-      desc: "Priority processing for urgent medical cases",
-    },
-    {
-      name: "Report Access Online",
+      name: "Digital Reports",
       icon: "📱",
-      desc: "Secure digital access to reports anytime, anywhere",
+      desc: "Secure online access to test results via app/email with doctor consultation recommendations",
     },
     {
-      name: "Lab to Lab Services",
-      icon: "🔬",
-      desc: "Specialized testing through our referral network",
+      name: "Senior Citizen Care",
+      icon: "👵",
+      desc: "Specialized services for elderly including priority slots, chronic condition monitoring, and caregiver support",
+    },
+    {
+      name: "Easy Booking & Support",
+      icon: "🏢",
+      desc: "Book online or via call/WhatsApp — with flexible appointment slots, real-time tracking, and 24/7 support.",
     },
   ];
 

@@ -8,11 +8,10 @@ const AboutUsPage = () => {
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="container mx-auto px-6 relative z-10 text-start py-20">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            About name Diagnostic Center
+            About Lara Health Care
           </h1>
           <p className="text-xl md:text-2xl  mx-auto">
-            We are a trusted name in diagnostics, committed to delivering
-            accurate test results with advanced lab technology.
+            We're a next-generation healthcare startup focused on delivering diagnostic lab services at your doorstep.
           </p>
         </div>
       </section>
@@ -30,22 +29,16 @@ const AboutUsPage = () => {
             </div>
             <div className="lg:w-1/2">
               <h2 className="text-3xl font-bold text-blue-900 mb-6">
-                Our Story
+                Who We Are
               </h2>
               <p className="text-lg mb-4">
-                Established in 2005, name Diagnostic Center has grown
-                from a small local lab to one of the region's most trusted
-                diagnostic service providers.
+                In a fast-paced world where time, convenience, and accessibility are critical, we provide a seamless experience for individuals and families to get their medical tests done without stepping out.
               </p>
               <p className="text-lg mb-4">
-                With over 18 years of experience, we've served more than 50,000
-                patients and partnered with 200+ hospitals and clinics across
-                the region.
+                Our services include home sample collection, NABL-accredited lab testing, and digital report delivery, all at affordable pricing. We cater to people from all walks of life — from working professionals and home-bound elderly to patients in remote areas who lack easy access to diagnostic centers.
               </p>
               <p className="text-lg">
-                Our journey has been guided by a simple principle: every test we
-                conduct impacts someone's health journey, and we treat that
-                responsibility with the utmost seriousness.
+                We're not just another healthcare provider — we're a care partner working to make diagnostic services simple, trustworthy, and accessible. With our growing network of trained phlebotomists, certified labs, and digital tools, we are creating a healthier, more connected India — one doorstep at a time.
               </p>
             </div>
           </div>
@@ -61,53 +54,61 @@ const AboutUsPage = () => {
               <h3 className="text-2xl font-bold text-blue-900 mb-4">
                 Our Mission
               </h3>
-              <p className="text-gray-700">
-                To provide reliable, timely, and affordable diagnostic solutions
-                with care and compassion.
-              </p>
+              <ul className="list-disc pl-5 text-gray-700 space-y-2">
+                <li>Deliver trusted lab testing to homes with precision, hygiene, and speed</li>
+                <li>Bridge the healthcare access gap by reaching underserved, rural, and immobile populations</li>
+                <li>Empower users through digital health tools including online booking and real-time tracking</li>
+                <li>Uphold the values of integrity, empathy, and service excellence</li>
+                <li>Act as a healthcare partner — not just a provider — offering end-to-end support</li>
+              </ul>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md border-l-4 border-blue-600">
               <div className="text-4xl mb-4">👁️</div>
               <h3 className="text-2xl font-bold text-blue-900 mb-4">
                 Our Vision
               </h3>
+              <p className="text-gray-700 mb-4">
+                To revolutionize healthcare access by making diagnostic services fast, affordable, and available at every doorstep — empowering healthier communities through innovation, compassion, and trust.
+              </p>
               <p className="text-gray-700">
-                To be the region's most trusted diagnostic partner through
-                innovation and service excellence.
+                We envision a world where no one misses a medical test due to time, distance, or cost. By bringing diagnostics home, we aim to promote preventive healthcare and early detection, leading to healthier lives and reduced healthcare burdens.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Our Values */}
+      {/* Our Goals */}
       <section className="py-16 px-20 bg-white">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center text-blue-900 mb-12">
-            Our Values
+            Our Strategic Goals
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {[
               {
-                title: "Accuracy",
-                desc: "Precision in every test with advanced technology",
+                title: "Doorstep Diagnostics",
+                desc: "Build a robust network of trained phlebotomists and mobile units with <24-hour turnaround time and flexible scheduling including weekends.",
               },
               {
-                title: "Transparency",
-                desc: "Clear pricing and honest reporting",
+                title: "Affordability for All",
+                desc: "Introduce package pricing, health subscriptions, and partner with government schemes to serve low-income families with transparent billing.",
               },
               {
-                title: "Innovation",
-                desc: "Continual investment in latest diagnostic methods",
-              },
-              { title: "Patient-Centric", desc: "Your health is our priority" },
-              {
-                title: "Certified Standards",
-                desc: "NABL-accredited lab protocols",
+                title: "Customer-Centric Experience",
+                desc: "User-friendly digital tools, multilingual support, and follow-up assistance for seamless service.",
               },
               {
-                title: "Professional Team",
-                desc: "Highly trained medical experts",
+                title: "Trusted Partnerships",
+                desc: "Partner with top-tier NABL/ISO-certified labs with regular quality audits and specialized test offerings.",
+              },
+              {
+                title: "Community Health",
+                desc: "Organize health camps, awareness drives, and provide subsidized tests to vulnerable populations.",
+              },
+              {
+                title: "Innovation & Growth",
+                desc: "Launch AI health dashboards, integrate with telemedicine, and expand to Tier 2 & 3 cities while maintaining quality.",
               },
             ].map((value, index) => (
               <div
@@ -124,45 +125,47 @@ const AboutUsPage = () => {
         </div>
       </section>
 
-      {/* Meet the Team (Optional) */}
+      {/* Our Values */}
       <section className="py-16 px-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center text-blue-900 mb-12">
-            Meet Our Experts
+            Our Values
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                name: "Dr. K. Reddy",
-                role: "Chief Pathologist",
-                img: "https://randomuser.me/api/portraits/men/32.jpg",
+                title: "Innovation",
+                desc: "Continually improving our services through technology and creative solutions",
               },
               {
-                name: "Dr. P. Nair",
-                role: "Microbiology Specialist",
-                img: "https://randomuser.me/api/portraits/women/44.jpg",
+                title: "Compassion",
+                desc: "Treating every patient with empathy and understanding",
               },
               {
-                name: "Dr. S. Gupta",
-                role: "Biochemistry Head",
-                img: "https://randomuser.me/api/portraits/men/75.jpg",
+                title: "Accessibility",
+                desc: "Removing barriers to healthcare for all communities",
               },
-            ].map((member, index) => (
+              { 
+                title: "Trust", 
+                desc: "Building relationships through reliable and transparent services" 
+              },
+              {
+                title: "Quality",
+                desc: "Maintaining highest standards in testing and service delivery",
+              },
+              {
+                title: "Community Focus",
+                desc: "Prioritizing health needs of underserved populations",
+              },
+            ].map((value, index) => (
               <div
                 key={index}
-                className="bg-white rounded-lg overflow-hidden shadow-md text-center"
+                className="bg-white p-6 rounded-lg hover:shadow-md transition border border-gray-200"
               >
-                <img
-                  src={member.img}
-                  alt={member.name}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-blue-900">
-                    {member.name}
-                  </h3>
-                  <p className="text-gray-600">{member.role}</p>
-                </div>
+                <h3 className="text-xl font-semibold text-blue-900 mb-2">
+                  {value.title}
+                </h3>
+                <p className="text-gray-700">{value.desc}</p>
               </div>
             ))}
           </div>
@@ -173,14 +176,14 @@ const AboutUsPage = () => {
       <section className="py-16 px-20 mb-20 bg-blue-900 text-white">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-3xl font-bold mb-6">
-            Ready to book your test or want to partner with us?
+            Ready to book your home test or want to partner with us?
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
             <button className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition">
-              Book a Test
+              Book a Test Now
             </button>
             <button className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-900 transition">
-              Contact Us
+              Become a Partner
             </button>
           </div>
         </div>
