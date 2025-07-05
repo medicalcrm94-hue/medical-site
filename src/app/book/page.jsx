@@ -35,7 +35,7 @@ const BookTestPage = () => {
   return (
     <div className="font-sans text-gray-800  bg-gray-50 min-h-screen">
       {/* Page Header */}
-      <section className="relative bg-blue-900 px-20 text-white py-20 md:py-28 overflow-hidden">
+      <section className=" relative bg-blue-900 px-20 text-white py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 bg-blue-800 opacity-90"></div>
         <div className="absolute right-0 top-0 w-1/3 h-full bg-blue-700 opacity-20 transform skew-x-12"></div>
         <div className="container mx-auto px-6 relative z-10 py-20">
@@ -48,9 +48,8 @@ const BookTestPage = () => {
           </p>
         </div>
       </section>
-
       {/* Main Content */}
-      <div className="container px-20 mx-auto py-12">
+      <div id="second-section" className="container px-20 mx-auto py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Booking Form */}
           <div className="lg:w-2/3">

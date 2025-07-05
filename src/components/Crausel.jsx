@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link";
+
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -11,7 +13,7 @@ const carouselItems = [
       "State-of-the-art cardiac care with experienced specialists using the latest technology to ensure your heart health.",
     image:
       "https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080",
-    buttonText: "Learn More",
+    buttonText: "Book Appointment",
   },
   {
     id: 2,
@@ -152,6 +154,7 @@ const Carousel = () => {
                 >
                   {item.description}
                 </p>
+                <Link href='/book#second-section'>
                 <button
                   className={`bg-white text-blue-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 ${
                     index === currentIndex && !isTransitioning && !isInitialLoad
@@ -170,6 +173,7 @@ const Carousel = () => {
                 >
                   {item.buttonText}
                 </button>
+                </Link>
               </div>
             </div>
           </div>

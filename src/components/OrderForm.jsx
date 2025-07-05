@@ -538,13 +538,13 @@ const OrderForm = () => {
   return (
     <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4 text-blue-800">
-        Orders Management
+        Appointment Management
       </h2>
       <button
         onClick={() => setShowForm(!showForm)}
         className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded mb-4 transition duration-300"
       >
-        {showForm ? "Hide Order Form" : "Create New Order"}
+        {showForm ? "Hide Appointment Form" : "Book Appointment"}
       </button>
 
       {showForm && (

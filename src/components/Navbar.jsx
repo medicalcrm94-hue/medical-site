@@ -136,7 +136,7 @@ const Navbar = () => {
                   : "text-gray-700 hover:text-blue-700"
               }`}
             >
-              Book a Test
+              Book a Appointment
             </Link>
             <Link
               href="/reports"
@@ -307,7 +307,7 @@ const Navbar = () => {
                   : "text-gray-700"
               } hover:text-blue-700`}
             >
-              Book a Test
+              Book a Appointment
             </Link>
             <Link
               href="/reports"
