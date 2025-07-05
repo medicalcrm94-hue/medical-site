@@ -4,14 +4,16 @@ const AboutUsPage = () => {
   return (
     <div className="font-sans bg-gray-50 text-gray-800">
       {/* Page Header */}
-      <section className="relative px-20 bg-blue-900 text-white py-24 md:py-32">
+      <section className="relative px-20 bg-blue-700 text-white py-24 md:py-32">
+        <div className="absolute right-0 top-0 w-1/3 h-full bg-blue-600 opacity-50 transform skew-x-12"></div>
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="container mx-auto px-6 relative z-10 text-start py-20">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             About Lara Health Care
           </h1>
           <p className="text-xl md:text-2xl  mx-auto">
-            We're a next-generation healthcare startup focused on delivering diagnostic lab services at your doorstep.
+            We're a next-generation healthcare startup focused on delivering
+            diagnostic lab services at your doorstep.
           </p>
         </div>
       </section>
@@ -32,13 +34,25 @@ const AboutUsPage = () => {
                 Who We Are
               </h2>
               <p className="text-lg mb-4">
-                In a fast-paced world where time, convenience, and accessibility are critical, we provide a seamless experience for individuals and families to get their medical tests done without stepping out.
+                In a fast-paced world where time, convenience, and accessibility
+                are critical, we provide a seamless experience for individuals
+                and families to get their medical tests done without stepping
+                out.
               </p>
               <p className="text-lg mb-4">
-                Our services include home sample collection, NABL-accredited lab testing, and digital report delivery, all at affordable pricing. We cater to people from all walks of life — from working professionals and home-bound elderly to patients in remote areas who lack easy access to diagnostic centers.
+                Our services include home sample collection, NABL-accredited lab
+                testing, and digital report delivery, all at affordable pricing.
+                We cater to people from all walks of life — from working
+                professionals and home-bound elderly to patients in remote areas
+                who lack easy access to diagnostic centers.
               </p>
               <p className="text-lg">
-                We're not just another healthcare provider — we're a care partner working to make diagnostic services simple, trustworthy, and accessible. With our growing network of trained phlebotomists, certified labs, and digital tools, we are creating a healthier, more connected India — one doorstep at a time.
+                We're not just another healthcare provider — we're a care
+                partner working to make diagnostic services simple, trustworthy,
+                and accessible. With our growing network of trained
+                phlebotomists, certified labs, and digital tools, we are
+                creating a healthier, more connected India — one doorstep at a
+                time.
               </p>
             </div>
           </div>
@@ -55,11 +69,26 @@ const AboutUsPage = () => {
                 Our Mission
               </h3>
               <ul className="list-disc pl-5 text-gray-700 space-y-2">
-                <li>Deliver trusted lab testing to homes with precision, hygiene, and speed</li>
-                <li>Bridge the healthcare access gap by reaching underserved, rural, and immobile populations</li>
-                <li>Empower users through digital health tools including online booking and real-time tracking</li>
-                <li>Uphold the values of integrity, empathy, and service excellence</li>
-                <li>Act as a healthcare partner — not just a provider — offering end-to-end support</li>
+                <li>
+                  Deliver trusted lab testing to homes with precision, hygiene,
+                  and speed
+                </li>
+                <li>
+                  Bridge the healthcare access gap by reaching underserved,
+                  rural, and immobile populations
+                </li>
+                <li>
+                  Empower users through digital health tools including online
+                  booking and real-time tracking
+                </li>
+                <li>
+                  Uphold the values of integrity, empathy, and service
+                  excellence
+                </li>
+                <li>
+                  Act as a healthcare partner — not just a provider — offering
+                  end-to-end support
+                </li>
               </ul>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md border-l-4 border-blue-600">
@@ -68,10 +97,15 @@ const AboutUsPage = () => {
                 Our Vision
               </h3>
               <p className="text-gray-700 mb-4">
-                To revolutionize healthcare access by making diagnostic services fast, affordable, and available at every doorstep — empowering healthier communities through innovation, compassion, and trust.
+                To revolutionize healthcare access by making diagnostic services
+                fast, affordable, and available at every doorstep — empowering
+                healthier communities through innovation, compassion, and trust.
               </p>
               <p className="text-gray-700">
-                We envision a world where no one misses a medical test due to time, distance, or cost. By bringing diagnostics home, we aim to promote preventive healthcare and early detection, leading to healthier lives and reduced healthcare burdens.
+                We envision a world where no one misses a medical test due to
+                time, distance, or cost. By bringing diagnostics home, we aim to
+                promote preventive healthcare and early detection, leading to
+                healthier lives and reduced healthcare burdens.
               </p>
             </div>
           </div>
@@ -145,9 +179,9 @@ const AboutUsPage = () => {
                 title: "Accessibility",
                 desc: "Removing barriers to healthcare for all communities",
               },
-              { 
-                title: "Trust", 
-                desc: "Building relationships through reliable and transparent services" 
+              {
+                title: "Trust",
+                desc: "Building relationships through reliable and transparent services",
               },
               {
                 title: "Quality",

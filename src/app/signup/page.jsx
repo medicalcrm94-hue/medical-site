@@ -2,6 +2,18 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {
+  Eye,
+  EyeOff,
+  Phone,
+  Lock,
+  User,
+  MapPin,
+  ArrowRight,
+  AlertCircle,
+  UserPlus,
+  Check,
+} from "lucide-react";
 
 const Signup = () => {
   const router = useRouter();
@@ -16,6 +28,8 @@ const Signup = () => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -33,7 +47,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "http://localhost:8005/api/users/customer-register",
+        "http://16.171.39.70:8005/api/users/customer-register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -62,105 +76,274 @@ const Signup = () => {
     }
   };
 
+  const passwordsMatch =
+    formData.password &&
+    formData.confirmPassword &&
+    formData.password === formData.confirmPassword;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-blue-700">
-          Create Your Account
-        </h2>
-
-        <form onSubmit={handleSignup} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4 py-8">
+      <div className="w-full max-w-lg">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4 shadow-lg">
+            <UserPlus className="w-8 h-8 text-white" />
           </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Create Account
+          </h1>
+          <p className="text-gray-600">Join us today and get started</p>
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium">User ID</label>
-            <input
-              type="text"
-              name="userID"
-              required
-              value={formData.userID}
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+        {/* Signup Form */}
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+          <form onSubmit={handleSignup} className="space-y-6">
+            {/* Full Name Input */}
+            <div className="space-y-2">
+              <label
+                htmlFor="name"
+                className="block text-sm font-semibold text-gray-700"
+              >
+                Full Name
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
+                  placeholder="Enter your full name"
+                />
+              </div>
+            </div>
+
+            {/* User ID Input */}
+            <div className="space-y-2">
+              <label
+                htmlFor="userID"
+                className="block text-sm font-semibold text-gray-700"
+              >
+                User ID
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="userID"
+                  type="text"
+                  name="userID"
+                  required
+                  value={formData.userID}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
+                  placeholder="Choose a unique user ID"
+                />
+              </div>
+            </div>
+
+            {/* Phone Number Input */}
+            <div className="space-y-2">
+              <label
+                htmlFor="phoneNumber"
+                className="block text-sm font-semibold text-gray-700"
+              >
+                Phone Number
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Phone className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="phoneNumber"
+                  type="tel"
+                  name="phoneNumber"
+                  required
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
+                  placeholder="Enter your phone number"
+                />
+              </div>
+            </div>
+
+            {/* Address Input */}
+            <div className="space-y-2">
+              <label
+                htmlFor="address"
+                className="block text-sm font-semibold text-gray-700"
+              >
+                Address
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <MapPin className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="address"
+                  type="text"
+                  name="address"
+                  required
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
+                  placeholder="Enter your address"
+                />
+              </div>
+            </div>
+
+            {/* Password Input */}
+            <div className="space-y-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-semibold text-gray-700"
+              >
+                Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
+                  placeholder="Create a strong password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-blue-600 transition-colors duration-200"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5 text-gray-400" />
+                  ) : (
+                    <Eye className="h-5 w-5 text-gray-400" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Confirm Password Input */}
+            <div className="space-y-2">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-semibold text-gray-700"
+              >
+                Confirm Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  required
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400 ${
+                    formData.confirmPassword && passwordsMatch
+                      ? "border-green-300 focus:ring-green-500"
+                      : formData.confirmPassword && !passwordsMatch
+                      ? "border-red-300 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-blue-500"
+                  }`}
+                  placeholder="Confirm your password"
+                />
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center space-x-1">
+                  {formData.confirmPassword && passwordsMatch && (
+                    <Check className="h-5 w-5 text-green-500" />
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="hover:text-blue-600 transition-colors duration-200"
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-5 w-5 text-gray-400" />
+                    ) : (
+                      <Eye className="h-5 w-5 text-gray-400" />
+                    )}
+                  </button>
+                </div>
+              </div>
+              {formData.confirmPassword && !passwordsMatch && (
+                <p className="text-sm text-red-600 flex items-center space-x-1">
+                  <AlertCircle className="h-4 w-4" />
+                  <span>Passwords do not match</span>
+                </p>
+              )}
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
+                <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                <p className="text-sm font-medium">{error}</p>
+              </div>
+            )}
+
+            {/* Signup Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg hover:shadow-xl"
+            >
+              <div className="flex items-center justify-center space-x-2">
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
+                    <span>Creating Account...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Create Account</span>
+                    <ArrowRight className="h-5 w-5" />
+                  </>
+                )}
+              </div>
+            </button>
+          </form>
+
+          {/* Footer */}
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-600">
+              Already have an account?{" "}
+              <a
+                href="/login"
+                className="font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200 hover:underline"
+              >
+                Sign in here
+              </a>
+            </p>
           </div>
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium">Phone Number</label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              required
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Address</label>
-            <input
-              type="text"
-              name="address"
-              required
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">Password</label>
-            <input
-              type="password"
-              name="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              required
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full mt-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
-          >
-            {loading ? "Signing up..." : "Signup"}
-          </button>
-        </form>
-
-        <p className="text-sm text-center mt-4">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Login here
-          </a>
-        </p>
+        {/* Additional Info */}
+        <div className="mt-8 text-center">
+          <p className="text-xs text-gray-500">
+            By creating an account, you agree to our{" "}
+            <a href="#" className="text-blue-600 hover:underline">
+              Terms of Service
+            </a>{" "}
+            and{" "}
+            <a href="#" className="text-blue-600 hover:underline">
+              Privacy Policy
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

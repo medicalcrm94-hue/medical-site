@@ -31,7 +31,8 @@ const PriceListPage = () => {
   return (
     <div className="font-sans text-gray-800 bg-gray-50 min-h-screen">
       {/* Page Header */}
-      <section className="relative bg-blue-900 text-white py-20 md:py-28">
+      <section className="relative bg-blue-700 opacity-90 text-white py-20 md:py-28">
+        <div className="absolute right-0 top-0 w-1/3 h-full bg-blue-600 opacity-50 transform skew-x-12"></div>
         <div className="absolute inset-0 bg-black opacity-30"></div>
         <div className="container py-20 mx-auto relative z-10 px-30 text-start">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
@@ -125,7 +126,8 @@ const PriceListPage = () => {
 
             {/* Table Note */}
             <div className="mt-4 text-sm text-gray-500">
-              * Prices are inclusive of all taxes. Home collection charges may apply.
+              * Prices are inclusive of all taxes. Home collection charges may
+              apply.
             </div>
           </div>
         </div>
@@ -139,7 +141,8 @@ const PriceListPage = () => {
               Need a custom quotation or lab-to-lab partnership rates?
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              Contact our team for bulk pricing, corporate packages, and special arrangements.
+              Contact our team for bulk pricing, corporate packages, and special
+              arrangements.
             </p>
             <button className="bg-blue-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
               Contact Us

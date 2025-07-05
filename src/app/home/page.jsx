@@ -11,6 +11,7 @@ import {
   Shield,
   Award,
 } from "lucide-react";
+import Carousel from "@/components/Crausel";
 
 const nameLabHome = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -148,114 +149,7 @@ const nameLabHome = () => {
   return (
     <div className="font-sans bg-white text-gray-800 overflow-hidden ">
       {/* Hero Section */}
-      <section
-        id="home"
-        className="relative px-20 pt-10 min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-black/30"></div>
-
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-24 h-24 bg-white/10 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-pulse"></div>
-        </div>
-
-        <div className="container mx-auto px-6 py-32 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-                Reliable. Accurate.
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">
-                  Trusted Diagnostics.
-                </span>
-              </h1>
-              <p className="text-xl md:text-2xl mb-8 text-blue-100">
-                Serving quality healthcare with advanced testing and timely
-                reports across name region.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <button className="bg-white text-blue-900 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300 hover:shadow-xl transform hover:scale-105">
-                  Book a Test
-                </button>
-                <button
-                  onClick={() => scrollToSection("tests")}
-                  className="border-2 border-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-blue-900 transition-all duration-300 hover:shadow-xl"
-                >
-                  View Test Packages
-                </button>
-              </div>
-
-              <div className="flex gap-15">
-                <div className="text-start">
-                  <div className="text-2xl font-bold">50K+</div>
-                  <div className="text-blue-200 text-sm">Happy Patients</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold">100+</div>
-                  <div className="text-blue-200 text-sm">Test Types</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold">15+</div>
-                  <div className="text-blue-200 text-sm">Locations</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Booking Form */}
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
-              <h3 className="text-2xl font-bold mb-6">Quick Book Test</h3>
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={bookingForm.name}
-                  onChange={(e) =>
-                    setBookingForm({ ...bookingForm, name: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
-                />
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  value={bookingForm.phone}
-                  onChange={(e) =>
-                    setBookingForm({ ...bookingForm, phone: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
-                />
-                <select
-                  value={bookingForm.test}
-                  onChange={(e) =>
-                    setBookingForm({ ...bookingForm, test: e.target.value })
-                  }
-                  className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/50"
-                >
-                  <option value="">Select Test</option>
-                  {popularTests.map((test, index) => (
-                    <option
-                      key={index}
-                      value={test.name}
-                      className="text-gray-800"
-                    >
-                      {test.name}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  onClick={handleBookingSubmit}
-                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-300 hover:shadow-lg"
-                >
-                  Book Now
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
+      <Carousel/>
     {/* Why Choose Us */}
 <section
   id="about"

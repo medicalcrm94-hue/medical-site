@@ -74,7 +74,7 @@ const TestsServicesPage = () => {
     },
   ];
 
-   const services = [
+  const services = [
     {
       name: "Home Sample Collection",
       icon: "🏠",
@@ -100,7 +100,8 @@ const TestsServicesPage = () => {
   return (
     <div className="font-sans  text-gray-800">
       {/* Page Header */}
-      <section className="relative bg-blue-900 text-white py-20 px-20 md:py-28">
+      <section className="relative bg-blue-600 opacity-95 text-white py-20 px-20 md:py-28">
+        <div className="absolute right-0 top-0 w-1/3 h-full bg-blue-500 opacity-30 transform skew-x-12"></div>
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="container mx-auto py-20 px-6 relative z-10 text-start">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
