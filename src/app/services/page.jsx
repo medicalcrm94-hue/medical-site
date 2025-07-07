@@ -1,5 +1,7 @@
 import React from "react";
 
+import Link from "next/link";
+
 const TestsServicesPage = () => {
   const testCategories = [
     {
@@ -207,15 +209,17 @@ const TestsServicesPage = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto bg-blue-800 rounded-xl p-8 md:p-12 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Need to book a test?
+              Need to book a Appointment?
             </h2>
             <p className="text-xl mb-8">
               Our certified team is ready to serve you with accurate diagnostics
               and compassionate care.
             </p>
-            <button className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition">
-              Book a Test
-            </button>
+            <Link href="/book#second-section">
+              <button className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition">
+                Book a Appointment
+              </button>
+            </Link>
           </div>
         </div>
       </section>

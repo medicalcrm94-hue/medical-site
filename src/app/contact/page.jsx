@@ -170,10 +170,10 @@ const ContactUsPage = () => {
                     <h3 className="font-semibold text-gray-800 mb-1">Phone</h3>
                     <p className="text-gray-600">
                       <a
-                        href="tel:+919876543210"
+                        href="tel:+916309583777"
                         className="hover:text-blue-900 hover:underline"
                       >
-                        +91-98765-43210
+                        +91-6309583777
                       </a>
                     </p>
                   </div>

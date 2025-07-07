@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const AboutUsPage = () => {
   return (
@@ -213,11 +214,13 @@ const AboutUsPage = () => {
             Ready to book your home test or want to partner with us?
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-            <button className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition">
-              Book a Test Now
-            </button>
+            <Link href="/book#second-section">
+              <button className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition">
+                Book Appointment Now
+              </button>
+            </Link>
             <button className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-900 transition">
-              Become a Partner
+              Call Support
             </button>
           </div>
         </div>

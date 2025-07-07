@@ -326,10 +326,10 @@ const DownloadReportPage = () => {
       <section className="bg-blue-900 text-white py-12 mb-20">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
-            Need to book a test first?
+            Need to book a Appointment first?
           </h2>
           <button className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition">
-            Book a Test
+            Book a Appointment
           </button>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const PriceListPage = () => {
   const priceData = [
@@ -144,9 +145,11 @@ const PriceListPage = () => {
               Contact our team for bulk pricing, corporate packages, and special
               arrangements.
             </p>
-            <button className="bg-blue-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
-              Contact Us
-            </button>
+            <Link href="/contact">
+              <button className="bg-blue-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition">
+                Contact Us
+              </button>
+            </Link>
           </div>
         </div>
       </section>

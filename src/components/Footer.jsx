@@ -13,7 +13,7 @@ const Footer = () => {
 
         {/* Column 1: Logo & About */}
         <div>
-          <h2 className="text-2xl font-bold mb-2">Logo</h2>
+          <img className="mb-5" src="/logo.jpg" height={60} width={60} alt="Error" />
           <p className="text-sm">
             Trusted medical diagnostics with accurate results and advanced technology. Serving hospitals, labs, and individuals since [Year].
           </p>
@@ -38,7 +38,7 @@ const Footer = () => {
           <p className="text-sm">
             📍 Address: 123 example Street, Hyderabad, India  
             <br />
-            📞 Phone: +91-1234567891  
+            📞 Phone: +91-6309583777  
             <br />
             ✉️ Email: example.com
           </p>

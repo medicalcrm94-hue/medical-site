@@ -62,7 +62,10 @@ const Navbar = () => {
               isHomePage && !isScrolled ? "text-white" : "text-blue-700"
             }`}
           >
-            <Link href="/">Logo</Link>
+            <Link href="/">
+              <img src="/logo.jpg" height={50} width={50} alt="Error to load" />
+
+            </Link>
           </div>
 
           {/* Desktop Menu */}

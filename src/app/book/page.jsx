@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import OrderForm from "@/components/OrderForm";
 import React, { useState } from "react";
 
@@ -170,7 +171,7 @@ const BookTestPage = () => {
                   </h4>
                   <p className="text-gray-700">
                     For emergency requests, please call us at{" "}
-                    <strong>+91-98765-43210</strong>
+                    <strong>+91-6309583777</strong>
                   </p>
                 </div>
 
@@ -260,14 +261,16 @@ const BookTestPage = () => {
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
-              href="#booking-form"
+              href="/book#second-section"
               className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition inline-block"
             >
-              Book a Test Now
+              Book a Appointment Now
             </a>
+            <Link href="/contact">
             <button className="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-900 transition">
               Contact Support
             </button>
+            </Link>
           </div>
         </div>
       </section>

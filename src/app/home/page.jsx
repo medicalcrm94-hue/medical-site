@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import React, { useState, useEffect } from "react";
 import {
   Calendar,
@@ -149,196 +151,197 @@ const nameLabHome = () => {
   return (
     <div className="font-sans bg-white text-gray-800 overflow-hidden ">
       {/* Hero Section */}
-      <Carousel/>
-    {/* Why Choose Us */}
-<section
-  id="about"
-  className="py-20 px-20 bg-gradient-to-b from-gray-50 to-white"
->
-  <div className="container mx-auto px-6">
-    <div className="text-center mb-16">
-      <h2 className="text-4xl font-bold mb-4 text-blue-900">
-        Why Choose Lara Health Care
-      </h2>
-      <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-        Healthcare diagnostics made simple, accessible and reliable
-      </p>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {[
-        {
-          icon: <MapPin className="w-12 h-12 text-blue-600" />,
-          title: "Doorstep Convenience",
-          desc: "No travel, no waiting rooms - we come to you",
-        },
-        {
-          icon: <Shield className="w-12 h-12 text-green-600" />,
-          title: "Certified Labs",
-          desc: "Tests processed by trusted NABL/ISO-accredited labs",
-        },
-        {
-          icon: <Clock className="w-12 h-12 text-orange-600" />,
-          title: "Fast Report Turnaround",
-          desc: "Reports delivered within 24-48 hours",
-        },
-        {
-          icon: "💰",
-          title: "Affordable Prices",
-          desc: "Quality diagnostics that fit your budget",
-          customIcon: true,
-        },
-        {
-          icon: "👩‍⚕️",
-          title: "Trained Phlebotomists",
-          desc: "Hygienic and professional sample collection",
-          customIcon: true,
-        },
-        {
-          icon: "🌐",
-          title: "Multilingual Support",
-          desc: "Service in English, Hindi, Telugu, and more",
-          customIcon: true,
-        },
-      ].map((item, index) => (
-        <div
-          key={index}
-          className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
-        >
-          <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
-            {item.customIcon ? (
-              <span className="text-4xl">{item.icon}</span>
-            ) : (
-              item.icon
-            )}
+      <Carousel />
+      {/* Why Choose Us */}
+      <section
+        id="about"
+        className="py-20 px-20 bg-gradient-to-b from-gray-50 to-white"
+      >
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-blue-900">
+              Why Choose Lara Health Care
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Healthcare diagnostics made simple, accessible and reliable
+            </p>
           </div>
-          <h3 className="text-xl font-bold mb-4 text-gray-800">
-            {item.title}
-          </h3>
-          <p className="text-gray-600 leading-relaxed">{item.desc}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
 
-{/* Popular Tests */}
-<section id="tests" className="py-20 px-20 bg-white">
-  <div className="container mx-auto px-6">
-    <div className="text-center mb-16">
-      <h2 className="text-4xl font-bold mb-4 text-blue-900">
-        Popular Tests & Packages
-      </h2>
-      <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-        Quality diagnostics at affordable prices
-      </p>
-    </div>
-
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      {[
-        {
-          name: "Thyroid (TSH)",
-          price: "₹200",
-          originalPrice: "₹300",
-          tests: "1 Test",
-          icon: "🦋",
-        },
-        {
-          name: "Full Thyroid Test",
-          price: "₹550",
-          originalPrice: "₹750",
-          tests: "3 Tests",
-          icon: "🦋",
-        },
-        {
-          name: "Lipid Profile",
-          price: "₹450",
-          originalPrice: "₹600",
-          tests: "4 Tests",
-          icon: "❤️",
-        },
-        {
-          name: "Liver Function Test",
-          price: "₹460",
-          originalPrice: "₹650",
-          tests: "8 Tests",
-          icon: "🫁",
-        },
-        {
-          name: "HbA1c",
-          price: "₹550",
-          originalPrice: "₹700",
-          tests: "1 Test",
-          icon: "🩸",
-        },
-        {
-          name: "Complete Blood Count",
-          price: "₹350",
-          originalPrice: "₹500",
-          tests: "15 Tests",
-          icon: "💉",
-        },
-        {
-          name: "Iron Studies",
-          price: "₹600",
-          originalPrice: "₹850",
-          tests: "4 Tests",
-          icon: "🧲",
-        },
-        {
-          name: "Diabetes Panel",
-          price: "₹800",
-          originalPrice: "₹1,100",
-          tests: "6 Tests",
-          icon: "🍬",
-        },
-      ].map((test, index) => (
-        <div
-          key={index}
-          className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-        >
-          <div className="p-6">
-            <div className="text-4xl mb-4">{test.icon}</div>
-            <h3 className="text-xl font-bold mb-2 text-gray-800">
-              {test.name}
-            </h3>
-            <p className="text-sm text-gray-500 mb-4">{test.tests}</p>
-
-            <div className="mb-4">
-              <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold text-blue-900">
-                  {test.price}
-                </span>
-                <span className="text-lg text-gray-400 line-through">
-                  {test.originalPrice}
-                </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <MapPin className="w-12 h-12 text-blue-600" />,
+                title: "Doorstep Convenience",
+                desc: "No travel, no waiting rooms - we come to you",
+              },
+              {
+                icon: <Shield className="w-12 h-12 text-green-600" />,
+                title: "Certified Labs",
+                desc: "Tests processed by trusted NABL/ISO-accredited labs",
+              },
+              {
+                icon: <Clock className="w-12 h-12 text-orange-600" />,
+                title: "Fast Report Turnaround",
+                desc: "Reports delivered within 24-48 hours",
+              },
+              {
+                icon: "💰",
+                title: "Affordable Prices",
+                desc: "Quality diagnostics that fit your budget",
+                customIcon: true,
+              },
+              {
+                icon: "👩‍⚕️",
+                title: "Trained Phlebotomists",
+                desc: "Hygienic and professional sample collection",
+                customIcon: true,
+              },
+              {
+                icon: "🌐",
+                title: "Multilingual Support",
+                desc: "Service in English, Hindi, Telugu, and more",
+                customIcon: true,
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+              >
+                <div className="mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                  {item.customIcon ? (
+                    <span className="text-4xl">{item.icon}</span>
+                  ) : (
+                    item.icon
+                  )}
+                </div>
+                <h3 className="text-xl font-bold mb-4 text-gray-800">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
               </div>
-              <div className="text-sm text-green-600 font-medium">
-                Save{" "}
-                {Math.round(
-                  (1 -
-                    parseInt(test.price.replace(/[₹,]/g, "")) /
-                    parseInt(test.originalPrice.replace(/[₹,]/g, ""))) *
-                    100
-                )}
-                %
-              </div>
-            </div>
-
-            <button
-              onClick={() =>
-                setBookingForm({ ...bookingForm, test: test.name })
-              }
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-900 transition-all duration-300 hover:shadow-lg transform group-hover:scale-105"
-            >
-              Book Now
-            </button>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
+
+      {/* Popular Tests */}
+      <section id="tests" className="py-20 px-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-blue-900">
+              Popular Tests & Packages
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Quality diagnostics at affordable prices
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {[
+              {
+                name: "Thyroid (TSH)",
+                price: "₹200",
+                originalPrice: "₹300",
+                tests: "1 Test",
+                icon: "🦋",
+              },
+              {
+                name: "Full Thyroid Test",
+                price: "₹550",
+                originalPrice: "₹750",
+                tests: "3 Tests",
+                icon: "🦋",
+              },
+              {
+                name: "Lipid Profile",
+                price: "₹450",
+                originalPrice: "₹600",
+                tests: "4 Tests",
+                icon: "❤️",
+              },
+              {
+                name: "Liver Function Test",
+                price: "₹460",
+                originalPrice: "₹650",
+                tests: "8 Tests",
+                icon: "🫁",
+              },
+              {
+                name: "HbA1c",
+                price: "₹550",
+                originalPrice: "₹700",
+                tests: "1 Test",
+                icon: "🩸",
+              },
+              {
+                name: "Complete Blood Count",
+                price: "₹350",
+                originalPrice: "₹500",
+                tests: "15 Tests",
+                icon: "💉",
+              },
+              {
+                name: "Iron Studies",
+                price: "₹600",
+                originalPrice: "₹850",
+                tests: "4 Tests",
+                icon: "🧲",
+              },
+              {
+                name: "Diabetes Panel",
+                price: "₹800",
+                originalPrice: "₹1,100",
+                tests: "6 Tests",
+                icon: "🍬",
+              },
+            ].map((test, index) => (
+              <div
+                key={index}
+                className="group bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <div className="p-6">
+                  <div className="text-4xl mb-4">{test.icon}</div>
+                  <h3 className="text-xl font-bold mb-2 text-gray-800">
+                    {test.name}
+                  </h3>
+                  <p className="text-sm text-gray-500 mb-4">{test.tests}</p>
+
+                  <div className="mb-4">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-2xl font-bold text-blue-900">
+                        {test.price}
+                      </span>
+                      <span className="text-lg text-gray-400 line-through">
+                        {test.originalPrice}
+                      </span>
+                    </div>
+                    <div className="text-sm text-green-600 font-medium">
+                      Save{" "}
+                      {Math.round(
+                        (1 -
+                          parseInt(test.price.replace(/[₹,]/g, "")) /
+                            parseInt(test.originalPrice.replace(/[₹,]/g, ""))) *
+                          100
+                      )}
+                      %
+                    </div>
+                  </div>
+                  <Link href="/book#second-section">
+                    <button
+                      onClick={() =>
+                        setBookingForm({ ...bookingForm, test: test.name })
+                      }
+                      className="w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-900 transition-all duration-300 hover:shadow-lg transform group-hover:scale-105"
+                    >
+                      Book Now
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* How It Works */}
       <section className="py-20 px-20 bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -402,7 +405,6 @@ const nameLabHome = () => {
       </section>
 
       {/* Testimonials */}
-    
 
       {/* Download Report Section */}
       <section className="py-20 px-20 mb-20 bg-gradient-to-r from-blue-900 to-blue-800 text-white">

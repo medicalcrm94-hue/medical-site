@@ -47,7 +47,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "http://16.171.39.70:8005/api/users/customer-register",
+        "http://localhost:8005/api/users/customer-register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -57,7 +57,7 @@ const Signup = () => {
             phoneNumber: formData.phoneNumber,
             address: formData.address,
             password: formData.password,
-            tenantId: "6857d7c73832f6468f9b7dff",
+            tenantId: "686a595de171a456ba6fc521",
             role: "customer",
           }),
         }
