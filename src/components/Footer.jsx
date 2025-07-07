@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import {
   FaFacebookF,
   FaTwitter,
@@ -39,9 +40,11 @@ const Footer = () => {
             📍 Address: 123 example Street, Hyderabad, India  
             <br />
             📞 Phone: +91-6309583777  
-            <br />
-            ✉️ Email: example.com
+            <br /> 
           </p>
+          <Link href="mailto:larahealth777@gmail.com">
+          ✉️ Email: larahealth777@gmail.com
+          </Link>
         </div>
 
         {/* Column 4: Social Media */}

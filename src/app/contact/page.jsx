@@ -234,11 +234,11 @@ const ContactUsPage = () => {
                       </h3>
                       <p className="text-gray-600">
                         <a
-                          href="mailto:info@namelab.com"
+                          href="mailto:larahealth777@gmail.com"
                           className="hover:text-blue-900 hover:underline"
-                          aria-label="Email us at info@namelab.com"
+                          aria-label="Email us at larahealth777@gmail.com"
                         >
-                          info@namelab.com
+                          larahealth777@gmail.com
                         </a>
                       </p>
                     </div>
