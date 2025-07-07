@@ -140,7 +140,7 @@ const OrderForm = () => {
     setSelectedSubProducts([]);
     setQuantities({});
   };
-  
+
   const handleUnitsChange = (e) => {
     setSelectedProduct({ ...selectedProduct, units: e.target.value });
   };
@@ -536,13 +536,13 @@ const OrderForm = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-blue-800">
+    <div className="container mx-auto bg-white rounded-lg shadow-md">
+      <h2 className="px-4 text-2xl font-bold mb-4 text-blue-800">
         Appointment Management
       </h2>
       <button
         onClick={() => setShowForm(!showForm)}
-        className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded mb-4 transition duration-300"
+        className="mx-4 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded mb-4 transition duration-300"
       >
         {showForm ? "Hide Appointment Form" : "Book Appointment"}
       </button>
@@ -796,7 +796,7 @@ const OrderForm = () => {
             </div>
           )}
 
-          <div className=" p-4 rounded-lg mb-6">
+          <div className="rounded-lg mb-6">
             <h3 className="text-blue-800 font-bold mb-4">
               Customer Information
             </h3>
@@ -955,111 +955,102 @@ const OrderForm = () => {
                 onChange={handleAddressChange}
                 className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
               />
-            </div>
+            
 
             <button
               type="button"
               onClick={() => setShowCustomerDetails(!showCustomerDetails)}
               className="text-blue-600 hover:text-blue-800 text-sm font-medium mb-4"
-            >
-              {showCustomerDetails
-                ? "Hide Additional Details"
-                : "Show Additional Details"}
-            </button>
-
-            {showCustomerDetails && (
-              <div className="bg-blue-50 p-4 rounded-lg mt-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label
-                      htmlFor="emailAddress"
-                      className="block text-blue-700 mb-1"
-                    >
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      name="emailAddress"
-                      value={formData.emailAddress}
-                      placeholder="Email Address"
-                      onChange={handleChange}
-                      className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="gender"
-                      className="block text-blue-700 mb-1"
-                    >
-                      Gender
-                    </label>
-                    <select
-                      name="gender"
-                      value={formData.gender}
-                      onChange={handleChange}
-                      className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                      <option value="Prefer Not Say">Prefer Not to Say</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="mb-4">
+            ></button>
+            <div className="rounded-lg mt-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
                   <label
-                    htmlFor="dateOfBirth"
+                    htmlFor="emailAddress"
                     className="block text-blue-700 mb-1"
                   >
-                    Date of Birth
+                    Email Address
                   </label>
                   <input
-                    type="date"
-                    name="dateOfBirth"
-                    value={formData.dateOfBirth}
+                    type="email"
+                    name="emailAddress"
+                    value={formData.emailAddress}
+                    placeholder="Email Address"
                     onChange={handleChange}
                     className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
                   />
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label
-                      htmlFor="emergencyContactName"
-                      className="block text-blue-700 mb-1"
-                    >
-                      Emergency Contact Name
-                    </label>
-                    <input
-                      type="text"
-                      name="emergencyContactName"
-                      value={formData.emergencyContactName}
-                      placeholder="Emergency Contact Name"
-                      onChange={handleChange}
-                      className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="emergencyContactNumber"
-                      className="block text-blue-700 mb-1"
-                    >
-                      Emergency Contact Number
-                    </label>
-                    <input
-                      type="text"
-                      name="emergencyContactNumber"
-                      value={formData.emergencyContactNumber}
-                      placeholder="Emergency Contact Number"
-                      onChange={handleChange}
-                      className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="gender" className="block text-blue-700 mb-1">
+                    Gender
+                  </label>
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    <option value="Prefer Not Say">Prefer Not to Say</option>
+                  </select>
                 </div>
               </div>
-            )}
+
+              <div className="mb-4">
+                <label
+                  htmlFor="dateOfBirth"
+                  className="block text-blue-700 mb-1"
+                >
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  value={formData.dateOfBirth}
+                  onChange={handleChange}
+                  className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label
+                    htmlFor="emergencyContactName"
+                    className="block text-blue-700 mb-1"
+                  >
+                    Emergency Contact Name
+                  </label>
+                  <input
+                    type="text"
+                    name="emergencyContactName"
+                    value={formData.emergencyContactName}
+                    placeholder="Emergency Contact Name"
+                    onChange={handleChange}
+                    className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="emergencyContactNumber"
+                    className="block text-blue-700 mb-1"
+                  >
+                    Emergency Contact Number
+                  </label>
+                  <input
+                    type="text"
+                    name="emergencyContactNumber"
+                    value={formData.emergencyContactNumber}
+                    placeholder="Emergency Contact Number"
+                    onChange={handleChange}
+                    className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">

@@ -15,17 +15,13 @@ const Navbar = () => {
   const toggleProfileMenu = () => setIsProfileOpen(!isProfileOpen);
 
   useEffect(() => {
-    // Check for token or login flag
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, []);
 
   useEffect(() => {
-    // Handle scroll event to detect when to show/hide navbar background
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      // Adjust this value based on your hero section height
-      // For example, if hero section is 100vh, you might want to trigger at 80vh
       setIsScrolled(scrollTop > 100);
     };
 
@@ -40,13 +36,19 @@ const Navbar = () => {
     window.location.href = "/";
   };
 
-  // Function to check if a link is active
-  const isActive = (href) => {
-    return pathname === href;
-  };
-
-  // Check if we're on the home page (where hero section exists)
+  const isActive = (href) => pathname === href;
   const isHomePage = pathname === "/";
+
+  // Nav links data for cleaner JSX
+  const navLinks = [
+    { href: "/", text: "Home" },
+    { href: "/about", text: "About Us" },
+    { href: "/services", text: "Tests & Services" },
+    { href: "/pricing", text: "Price List" },
+    { href: "/book", text: "Book Appointment" },
+    { href: "/reports", text: "Download Report" },
+    { href: "/contact", text: "Contact Us" },
+  ];
 
   return (
     <nav
@@ -57,127 +59,47 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div
-            className={`flex-shrink-0 text-xl font-bold transition-colors duration-300 ${
-              isHomePage && !isScrolled ? "text-white" : "text-blue-700"
-            }`}
-          >
+          <div className="flex-shrink-0">
             <Link href="/">
-              <img src="/logo.jpg" height={50} width={50} alt="Error to load" />
-
+              <img 
+                src="/logo.jpg" 
+                height={50} 
+                width={50} 
+                alt="Company Logo"
+                className="h-10 w-10 md:h-12 md:w-12 object-contain"
+              />
             </Link>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden text-sm md:flex items-center space-x-6">
-            <Link
-              href="/"
-              className={`transition-colors duration-300 ${
-                isActive("/")
-                  ? isHomePage && !isScrolled
-                    ? "text-white font-medium"
-                    : "text-blue-700 font-medium"
-                  : isHomePage && !isScrolled
-                  ? "text-gray-200 hover:text-white"
-                  : "text-gray-700 hover:text-blue-700"
-              }`}
-            >
-              Home
-              <span className="block h-0.5 max-w-0 bg-blue-500 transition-all duration-300 group-hover:max-w-full"></span>
-            </Link>
-            <Link
-              href="/about"
-              className={`transition-colors duration-300 ${
-                isActive("/about")
-                  ? isHomePage && !isScrolled
-                    ? "text-white font-medium"
-                    : "text-blue-700 font-medium"
-                  : isHomePage && !isScrolled
-                  ? "text-gray-200 hover:text-white"
-                  : "text-gray-700 hover:text-blue-700"
-              }`}
-            >
-              About Us
-            </Link>
-            <Link
-              href="/services"
-              className={`transition-colors duration-300 ${
-                isActive("/services")
-                  ? isHomePage && !isScrolled
-                    ? "text-white font-medium"
-                    : "text-blue-700 font-medium"
-                  : isHomePage && !isScrolled
-                  ? "text-gray-200 hover:text-white"
-                  : "text-gray-700 hover:text-blue-700"
-              }`}
-            >
-              Tests & Services
-            </Link>
-            <Link
-              href="/pricing"
-              className={`transition-colors duration-300 ${
-                isActive("/pricing")
-                  ? isHomePage && !isScrolled
-                    ? "text-white font-medium"
-                    : "text-blue-700 font-medium"
-                  : isHomePage && !isScrolled
-                  ? "text-gray-200 hover:text-white"
-                  : "text-gray-700 hover:text-blue-700"
-              }`}
-            >
-              Price List
-            </Link>
-            <Link
-              href="/book"
-              className={`transition-colors duration-300 ${
-                isActive("/book")
-                  ? isHomePage && !isScrolled
-                    ? "text-white font-medium"
-                    : "text-blue-700 font-medium"
-                  : isHomePage && !isScrolled
-                  ? "text-gray-200 hover:text-white"
-                  : "text-gray-700 hover:text-blue-700"
-              }`}
-            >
-              Book a Appointment
-            </Link>
-            <Link
-              href="/reports"
-              className={`transition-colors duration-300 ${
-                isActive("/reports")
-                  ? isHomePage && !isScrolled
-                    ? "text-white font-medium"
-                    : "text-blue-700 font-medium"
-                  : isHomePage && !isScrolled
-                  ? "text-gray-200 hover:text-white"
-                  : "text-gray-700 hover:text-blue-700"
-              }`}
-            >
-              Download Report
-            </Link>
-            <Link
-              href="/contact"
-              className={`transition-colors duration-300 ${
-                isActive("/contact")
-                  ? isHomePage && !isScrolled
-                    ? "text-white font-medium"
-                    : "text-blue-700 font-medium"
-                  : isHomePage && !isScrolled
-                  ? "text-gray-200 hover:text-white"
-                  : "text-gray-700 hover:text-blue-700"
-              }`}
-            >
-              Contact Us
-            </Link>
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-2 py-1 text-sm lg:text-base transition-colors duration-300 ${
+                  isActive(link.href)
+                    ? isHomePage && !isScrolled
+                      ? "text-white font-medium"
+                      : "text-blue-700 font-medium"
+                    : isHomePage && !isScrolled
+                    ? "text-gray-200 hover:text-white"
+                    : "text-gray-700 hover:text-blue-700"
+                }`}
+              >
+                {link.text}
+              </Link>
+            ))}
           </div>
 
-          {/* Right Side: Login/Signup or Profile Dropdown */}
-          <div className="ml-4 flex items-center space-x-3">
+          {/* Right Side: Login/Signup or Profile Dropdown (Desktop only) */}
+          <div className="hidden md:flex items-center space-x-3">
             {isLoggedIn ? (
               <div className="relative">
                 <button
                   onClick={toggleProfileMenu}
                   className="flex items-center space-x-1 focus:outline-none"
+                  aria-label="Profile menu"
                 >
                   <UserCircle
                     size={28}
@@ -220,7 +142,7 @@ const Navbar = () => {
               <>
                 <Link href="/login">
                   <button
-                    className={`px-4 py-1 border rounded transition-all duration-300 text-sm ${
+                    className={`px-4 py-1 text-sm border rounded transition-all duration-300 ${
                       isHomePage && !isScrolled
                         ? "border-white text-white hover:bg-white hover:text-blue-700"
                         : "border-blue-600 text-blue-600 hover:bg-blue-50"
@@ -231,7 +153,7 @@ const Navbar = () => {
                 </Link>
                 <Link href="/signup">
                   <button
-                    className={`px-4 py-1 rounded transition-all duration-300 text-sm ${
+                    className={`px-4 py-1 text-sm rounded transition-all duration-300 ${
                       isHomePage && !isScrolled
                         ? "bg-white text-blue-700 hover:bg-gray-100"
                         : "bg-blue-600 text-white hover:bg-blue-700"
@@ -253,6 +175,7 @@ const Navbar = () => {
                   ? "text-white hover:text-gray-200"
                   : "text-gray-700 hover:text-blue-700"
               }`}
+              aria-label="Toggle menu"
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -264,95 +187,40 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white shadow-lg">
           <div className="px-4 pt-2 pb-4 space-y-2">
-            <Link
-              href="/"
-              className={`block ${
-                isActive("/") ? "text-blue-700 font-medium" : "text-gray-700"
-              } hover:text-blue-700`}
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className={`block ${
-                isActive("/about")
-                  ? "text-blue-700 font-medium"
-                  : "text-gray-700"
-              } hover:text-blue-700`}
-            >
-              About Us
-            </Link>
-            <Link
-              href="/services"
-              className={`block ${
-                isActive("/services")
-                  ? "text-blue-700 font-medium"
-                  : "text-gray-700"
-              } hover:text-blue-700`}
-            >
-              Tests & Services
-            </Link>
-            <Link
-              href="/pricing"
-              className={`block ${
-                isActive("/pricing")
-                  ? "text-blue-700 font-medium"
-                  : "text-gray-700"
-              } hover:text-blue-700`}
-            >
-              Price List
-            </Link>
-            <Link
-              href="/book"
-              className={`block ${
-                isActive("/book")
-                  ? "text-blue-700 font-medium"
-                  : "text-gray-700"
-              } hover:text-blue-700`}
-            >
-              Book a Appointment
-            </Link>
-            <Link
-              href="/reports"
-              className={`block ${
-                isActive("/reports")
-                  ? "text-blue-700 font-medium"
-                  : "text-gray-700"
-              } hover:text-blue-700`}
-            >
-              Download Report
-            </Link>
-            <Link
-              href="/faq"
-              className={`block ${
-                isActive("/faq") ? "text-blue-700 font-medium" : "text-gray-700"
-              } hover:text-blue-700`}
-            >
-              FAQs
-            </Link>
-            <Link
-              href="/contact"
-              className={`block ${
-                isActive("/contact")
-                  ? "text-blue-700 font-medium"
-                  : "text-gray-700"
-              } hover:text-blue-700`}
-            >
-              Contact Us
-            </Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`block px-2 py-2 ${
+                  isActive(link.href) 
+                    ? "text-blue-700 font-medium" 
+                    : "text-gray-700"
+                } hover:text-blue-700 hover:bg-blue-50 rounded transition-colors`}
+                onClick={() => setIsOpen(false)}
+              >
+                {link.text}
+              </Link>
+            ))}
 
-            {/* Mobile Auth Buttons */}
+            {/* Mobile Auth Buttons - Always show login/signup or profile/logout */}
             <div className="pt-2 space-y-3">
               {isLoggedIn ? (
                 <>
-                  <Link href="/profile" className="w-full">
+                  <Link 
+                    href="/profile" 
+                    className="w-full block"
+                    onClick={() => setIsOpen(false)}
+                  >
                     <button className="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200 text-sm space-x-2">
                       <UserCircle size={20} />
                       <span>Profile</span>
                     </button>
                   </Link>
                   <button
-                    onClick={handleLogout}
+                    onClick={() => {
+                      setIsOpen(false);
+                      handleLogout();
+                    }}
                     className="w-full flex items-center justify-center px-4 py-2 border border-red-600 text-red-600 rounded hover:bg-red-50 transition duration-200 text-sm space-x-2"
                   >
                     <LogOut size={20} />
@@ -361,12 +229,20 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <Link href="/login" className="w-full">
+                  <Link 
+                    href="/login" 
+                    className="w-full block"
+                    onClick={() => setIsOpen(false)}
+                  >
                     <button className="w-full px-4 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-50 transition duration-200 text-sm">
                       Login
                     </button>
                   </Link>
-                  <Link href="/signup" className="w-full">
+                  <Link 
+                    href="/signup" 
+                    className="w-full block"
+                    onClick={() => setIsOpen(false)}
+                  >
                     <button className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200 text-sm">
                       Signup
                     </button>

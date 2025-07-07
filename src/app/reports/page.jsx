@@ -83,7 +83,6 @@ const DownloadReportPage = () => {
       {/* Page Header */}
       <section className="relative bg-blue-900 text-white py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 bg-blue-800 opacity-90"></div>
-        <div className="absolute right-0 top-0 w-1/3 h-full bg-blue-700 opacity-20 transform skew-x-12"></div>
         <div className="container mx-auto relative z-10 py-20 px-20 text-start">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Access Your Diagnostic Reports
