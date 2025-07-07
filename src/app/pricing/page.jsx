@@ -52,9 +52,6 @@ const PriceListPage = () => {
             <button className="px-4 sm:px-6 py-3 font-medium text-blue-900 border-b-2 border-blue-900 whitespace-nowrap text-sm sm:text-base">
               For Individuals
             </button>
-            <button className="px-4 sm:px-6 py-3 font-medium text-gray-500 hover:text-blue-900 whitespace-nowrap text-sm sm:text-base">
-              Lab-to-Lab Pricing
-            </button>
           </div>
         </div>
       </section>
