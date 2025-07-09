@@ -22,7 +22,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 100);
+      setIsScrolled(scrollTop > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -39,15 +39,16 @@ const Navbar = () => {
   const isActive = (href) => pathname === href;
   const isHomePage = pathname === "/";
 
-  // Nav links data for cleaner JSX
+  // Compact nav links with shorter text
   const navLinks = [
     { href: "/", text: "Home" },
-    { href: "/about", text: "About Us" },
-    { href: "/services", text: "Tests & Services" },
-    { href: "/pricing", text: "Price List" },
-    { href: "/book", text: "Book Appointment" },
-    { href: "/reports", text: "Download Report" },
-    { href: "/contact", text: "Contact Us" },
+    { href: "/about", text: "About" },
+    { href: "/services", text: "Services" },
+    { href: "/pricing", text: "Pricing" },
+    { href: "/book", text: "Book" },
+    { href: "/reports", text: "Reports" },
+    { href: "/medicine-exchange", text: "Exchange" },
+    { href: "/contact", text: "Contact" },
   ];
 
   return (
@@ -56,35 +57,35 @@ const Navbar = () => {
         isHomePage && !isScrolled ? "bg-transparent" : "bg-white shadow-md"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between h-12 sm:h-14">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
-              <img 
-                src="/logo.jpg" 
-                height={50} 
-                width={50} 
+              <img
+                src="/logo.jpg"
+                height={40}
+                width={40}
                 alt="Company Logo"
-                className="h-10 w-10 md:h-12 md:w-12 object-contain"
+                className="h-8 w-8 sm:h-9 sm:w-9 object-contain"
               />
             </Link>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-4">
+          {/* Desktop Menu - Compact */}
+          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-2 py-1 text-sm lg:text-base transition-colors duration-300 ${
+                className={`px-2 xl:px-3 py-1 text-xs xl:text-sm font-medium rounded-md transition-all duration-200 ${
                   isActive(link.href)
                     ? isHomePage && !isScrolled
-                      ? "text-white font-medium"
-                      : "text-blue-700 font-medium"
+                      ? "text-white bg-white/10"
+                      : "text-blue-700 bg-blue-50"
                     : isHomePage && !isScrolled
-                    ? "text-gray-200 hover:text-white"
-                    : "text-gray-700 hover:text-blue-700"
+                    ? "text-gray-200 hover:text-white hover:bg-white/10"
+                    : "text-gray-700 hover:text-blue-700 hover:bg-blue-50"
                 }`}
               >
                 {link.text}
@@ -92,23 +93,70 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right Side: Login/Signup or Profile Dropdown (Desktop only) */}
-          <div className="hidden md:flex items-center space-x-3">
+          {/* Tablet Menu - Medium screens */}
+          <div className="hidden md:flex lg:hidden items-center space-x-1">
+            {navLinks.slice(0, 5).map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-2 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
+                  isActive(link.href)
+                    ? isHomePage && !isScrolled
+                      ? "text-white bg-white/10"
+                      : "text-blue-700 bg-blue-50"
+                    : isHomePage && !isScrolled
+                    ? "text-gray-200 hover:text-white hover:bg-white/10"
+                    : "text-gray-700 hover:text-blue-700 hover:bg-blue-50"
+                }`}
+              >
+                {link.text}
+              </Link>
+            ))}
+            <div className="relative">
+              <button
+                onClick={toggleMenu}
+                className={`px-2 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
+                  isHomePage && !isScrolled
+                    ? "text-gray-200 hover:text-white hover:bg-white/10"
+                    : "text-gray-700 hover:text-blue-700 hover:bg-blue-50"
+                }`}
+              >
+                More
+              </button>
+              {isOpen && (
+                <div className="absolute right-0 mt-1 w-32 bg-white rounded-md shadow-lg py-1 z-50">
+                  {navLinks.slice(5).map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="block px-3 py-1 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {link.text}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right Side: Auth Buttons - Compact */}
+          <div className="hidden md:flex items-center space-x-2">
             {isLoggedIn ? (
               <div className="relative">
                 <button
                   onClick={toggleProfileMenu}
-                  className="flex items-center space-x-1 focus:outline-none"
+                  className="flex items-center space-x-1 focus:outline-none p-1 rounded-md hover:bg-black/5"
                   aria-label="Profile menu"
                 >
                   <UserCircle
-                    size={28}
+                    size={20}
                     className={`transition-colors duration-300 ${
                       isHomePage && !isScrolled ? "text-white" : "text-blue-700"
                     }`}
                   />
                   <ChevronDown
-                    size={16}
+                    size={12}
                     className={`transition-all duration-300 ${
                       isProfileOpen ? "rotate-180" : ""
                     } ${
@@ -120,19 +168,19 @@ const Navbar = () => {
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                  <div className="absolute right-0 mt-1 w-36 bg-white rounded-md shadow-lg py-1 z-50">
                     <Link
                       href="/profile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                      className="block px-3 py-1 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700"
                       onClick={() => setIsProfileOpen(false)}
                     >
                       Profile
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 flex items-center"
+                      className="w-full text-left px-3 py-1 text-xs text-gray-700 hover:bg-red-50 hover:text-red-700 flex items-center"
                     >
-                      <LogOut size={16} className="mr-2" />
+                      <LogOut size={12} className="mr-1" />
                       Logout
                     </button>
                   </div>
@@ -142,7 +190,7 @@ const Navbar = () => {
               <>
                 <Link href="/login">
                   <button
-                    className={`px-4 py-1 text-sm border rounded transition-all duration-300 ${
+                    className={`px-3 py-1 text-xs border rounded-md transition-all duration-300 ${
                       isHomePage && !isScrolled
                         ? "border-white text-white hover:bg-white hover:text-blue-700"
                         : "border-blue-600 text-blue-600 hover:bg-blue-50"
@@ -153,7 +201,7 @@ const Navbar = () => {
                 </Link>
                 <Link href="/signup">
                   <button
-                    className={`px-4 py-1 text-sm rounded transition-all duration-300 ${
+                    className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ${
                       isHomePage && !isScrolled
                         ? "bg-white text-blue-700 hover:bg-gray-100"
                         : "bg-blue-600 text-white hover:bg-blue-700"
@@ -170,14 +218,14 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className={`focus:outline-none transition-colors duration-300 ${
+              className={`focus:outline-none transition-colors duration-300 p-1 ${
                 isHomePage && !isScrolled
                   ? "text-white hover:text-gray-200"
                   : "text-gray-700 hover:text-blue-700"
               }`}
               aria-label="Toggle menu"
             >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -185,35 +233,35 @@ const Navbar = () => {
 
       {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-lg">
-          <div className="px-4 pt-2 pb-4 space-y-2">
+        <div className="md:hidden bg-white shadow-lg border-t">
+          <div className="px-3 pt-2 pb-3 space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`block px-2 py-2 ${
-                  isActive(link.href) 
-                    ? "text-blue-700 font-medium" 
-                    : "text-gray-700"
-                } hover:text-blue-700 hover:bg-blue-50 rounded transition-colors`}
+                className={`block px-3 py-2 text-sm rounded-md transition-colors ${
+                  isActive(link.href)
+                    ? "text-blue-700 font-medium bg-blue-50"
+                    : "text-gray-700 hover:text-blue-700 hover:bg-blue-50"
+                }`}
                 onClick={() => setIsOpen(false)}
               >
                 {link.text}
               </Link>
             ))}
 
-            {/* Mobile Auth Buttons - Always show login/signup or profile/logout */}
-            <div className="pt-2 space-y-3">
+            {/* Mobile Auth Section */}
+            <div className="pt-3 border-t border-gray-200 space-y-2">
               {isLoggedIn ? (
                 <>
-                  <Link 
-                    href="/profile" 
-                    className="w-full block"
+                  <Link
+                    href="/profile"
+                    className="block"
                     onClick={() => setIsOpen(false)}
                   >
-                    <button className="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200 text-sm space-x-2">
-                      <UserCircle size={20} />
-                      <span>Profile</span>
+                    <button className="w-full flex items-center justify-center px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 text-sm">
+                      <UserCircle size={16} className="mr-2" />
+                      Profile
                     </button>
                   </Link>
                   <button
@@ -221,33 +269,25 @@ const Navbar = () => {
                       setIsOpen(false);
                       handleLogout();
                     }}
-                    className="w-full flex items-center justify-center px-4 py-2 border border-red-600 text-red-600 rounded hover:bg-red-50 transition duration-200 text-sm space-x-2"
+                    className="w-full flex items-center justify-center px-3 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition duration-200 text-sm"
                   >
-                    <LogOut size={20} />
-                    <span>Logout</span>
+                    <LogOut size={16} className="mr-2" />
+                    Logout
                   </button>
                 </>
               ) : (
-                <>
-                  <Link 
-                    href="/login" 
-                    className="w-full block"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <button className="w-full px-4 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-50 transition duration-200 text-sm">
+                <div className="grid grid-cols-2 gap-2">
+                  <Link href="/login" onClick={() => setIsOpen(false)}>
+                    <button className="w-full px-3 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition duration-200 text-sm">
                       Login
                     </button>
                   </Link>
-                  <Link 
-                    href="/signup" 
-                    className="w-full block"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <button className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200 text-sm">
+                  <Link href="/signup" onClick={() => setIsOpen(false)}>
+                    <button className="w-full px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 text-sm">
                       Signup
                     </button>
                   </Link>
-                </>
+                </div>
               )}
             </div>
           </div>
