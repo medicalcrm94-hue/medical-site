@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useState } from "react";
 import {
   Pill,
@@ -21,6 +20,7 @@ import {
   Coins,
   ShoppingCart,
 } from "lucide-react";
+import MedicineExchangeCarousel from "@/components/carousels/MedicineCarousel";
 
 function App() {
   const [openFaq, setOpenFaq] = useState(null);
