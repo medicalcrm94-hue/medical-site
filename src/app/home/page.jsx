@@ -81,65 +81,92 @@ const NameLabHome = () => {
     }
   };
 
-  const popularTests = [
-    {
-      name: "Full Body Checkup",
-      price: "₹1,499",
-      originalPrice: "₹2,999",
-      tests: "60+ Tests",
-      icon: "🏥",
-    },
-    {
-      name: "Thyroid Profile",
-      price: "₹699",
-      originalPrice: "₹999",
-      tests: "3 Tests",
-      icon: "🦋",
-    },
-    {
-      name: "Diabetes Panel",
-      price: "₹899",
-      originalPrice: "₹1,299",
-      tests: "8 Tests",
-      icon: "🩸",
-    },
-    {
-      name: "Liver Function Test",
-      price: "₹799",
-      originalPrice: "₹1,199",
-      tests: "12 Tests",
-      icon: "🫁",
-    },
-    {
-      name: "Vitamin D & B12",
-      price: "₹1,299",
-      originalPrice: "₹1,799",
-      tests: "2 Tests",
-      icon: "☀️",
-    },
-    {
-      name: "Fever Panel",
-      price: "₹599",
-      originalPrice: "₹899",
-      tests: "5 Tests",
-      icon: "🌡️",
-    },
-    {
-      name: "Heart Health Package",
-      price: "₹1,899",
-      originalPrice: "₹2,699",
-      tests: "15 Tests",
-      icon: "❤️",
-    },
-    {
-      name: "Women's Health",
-      price: "₹1,599",
-      originalPrice: "₹2,299",
-      tests: "25 Tests",
-      icon: "👩‍⚕️",
-    },
-  ];
-
+ const popularTests = [
+  {
+    name: "Liver Function Test",
+    price: "₹460",
+    originalPrice: "₹600",
+    tests: "SGOT/SGPT/ALP etc.",
+    icon: "🫁",
+  },
+  {
+    name: "Complete Lipid Profile",
+    price: "₹450",
+    originalPrice: "₹600",
+    tests: "Cholesterol, Triglycerides",
+    icon: "🩺",
+  },
+  {
+    name: "Full Thyroid Test",
+    price: "₹550",
+    originalPrice: "₹700",
+    tests: "Thyroid hormones",
+    icon: "🦋",
+  },
+  {
+    name: "Diabetes Monitoring",
+    price: "₹550",
+    originalPrice: "₹700",
+    tests: "HbA1c Test",
+    icon: "🩸",
+  },
+  {
+    name: "Kidney Function Test",
+    price: "₹300",
+    originalPrice: "₹400",
+    tests: "Creatinine, Urea/BUN",
+    icon: "🧪",
+  },
+  {
+    name: "Electrolytes Panel",
+    price: "₹300",
+    originalPrice: "₹400",
+    tests: "Sodium, Potassium",
+    icon: "⚡",
+  },
+  {
+    name: "Pregnancy Test",
+    price: "₹650",
+    originalPrice: "₹800",
+    tests: "Beta-HCG",
+    icon: "🤰",
+  },
+  {
+    name: "Iron Deficiency Test",
+    price: "₹600",
+    originalPrice: "₹750",
+    tests: "Iron levels",
+    icon: "🧲",
+  },
+  {
+    name: "Inflammation Marker",
+    price: "₹220",
+    originalPrice: "₹300",
+    tests: "CRP quantitative",
+    icon: "🔥",
+  },
+  {
+    name: "Pancreas Function",
+    price: "₹300",
+    originalPrice: "₹400",
+    tests: "Lipase Test",
+    icon: "🩻",
+  },
+  {
+    name: "Blood Clotting Test",
+    price: "₹500",
+    originalPrice: "₹650",
+    tests: "APTT",
+    icon: "⏳",
+  },
+  {
+    name: "Reproductive Health",
+    price: "₹700",
+    originalPrice: "₹900",
+    tests: "Progesterone",
+    icon: "🌸",
+  }
+];
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {

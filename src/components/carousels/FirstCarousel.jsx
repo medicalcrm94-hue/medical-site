@@ -69,9 +69,9 @@ const BookAppointmentPage = () => {
         <div className="hidden lg:flex items-center justify-center ml-auto w-2/5 max-w-xl h-full pl-10">
           <div className="relative w-full h-[32rem]">
             <img
-              src="/exchange1.jpg"
+              src="/exchange1.png"
               alt="Doctor consultation illustration"
-              className="w-full h-full object-contain rounded-lg transform scale-105"
+              className="w-full h-full object-cover rounded-xl transform scale-105"
               loading="lazy"
               style={{ maxHeight: '100%' }}
             />
