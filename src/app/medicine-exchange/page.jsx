@@ -142,7 +142,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/poster1.jpg"
+                src="/exchange/3.png"
                 alt="Medicine Exchange Drive Poster 1"
                 className="w-full h-64 sm:h-80 object-cover"
                 onError={(e) => {
@@ -153,7 +153,7 @@ function App() {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/poster2.jpg"
+                src="/exchange/4.png"
                 alt="Medicine Exchange Drive Poster 2"
                 className="w-full h-64 sm:h-80 object-cover"
                 onError={(e) => {
@@ -358,8 +358,7 @@ function App() {
                   </div>
                   <div>
                     <p className="text-gray-600">Phone Numbers</p>
-                    <p className="text-gray-900 font-medium">+91-XXXXXXXXXX</p>
-                    <p className="text-gray-900 font-medium">+123-456-7890</p>
+                    <p className="text-gray-900 font-medium">+91-6309583777</p>
                   </div>
                 </div>
 

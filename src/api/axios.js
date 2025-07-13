@@ -17,17 +17,4 @@ api.interceptors.request.use(
   }
 );
 
-// api.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     if (error.response && error.response.status === 401) {
-//       // Token invalid or replaced, force logout
-//       localStorage.removeItem("authToken");
-//       window.location.href = "/login"; // redirect to login page
-//       alert("Another Device Logging in. You have been logged out.");
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-
 export default api;

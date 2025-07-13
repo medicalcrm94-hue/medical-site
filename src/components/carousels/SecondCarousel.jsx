@@ -12,14 +12,14 @@ const CallUsPage = () => {
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-700/90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-blue-950/90" />
       </div>
 
       {/* Content */}
       <div className="relative h-full flex items-center px-8 sm:px-12 md:px-16 lg:px-24">
         <div className="max-w-2xl text-white">
           {/* Icon Badge */}
-          <div className="bg-blue-400 w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+          <div className="bg-blue-800 w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg">
             <Phone className="w-7 h-7 text-white" />
           </div>
 
@@ -57,7 +57,7 @@ const CallUsPage = () => {
           {/* CTA Button */}
           <button
             onClick={() => window.open("tel:+916309583777", "_self")}
-            className="bg-white text-blue-500 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105"
+            className="bg-white text-blue-900 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105"
           >
             Call +91 6309583777
           </button>

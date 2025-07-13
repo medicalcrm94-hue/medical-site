@@ -14,14 +14,14 @@ const BookAppointmentPage = () => {
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-700/90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-800/90" />
       </div>
 
       {/* Content */}
       <div className="relative h-full flex items-center px-8 sm:px-12 md:px-16 lg:px-24">
         <div className="max-w-2xl text-white">
           {/* Icon Badge */}
-          <div className="bg-blue-400 w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+          <div className="bg-gray-700 w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg">
             <Calendar className="w-7 h-7 text-white" />
           </div>
 
@@ -53,7 +53,7 @@ const BookAppointmentPage = () => {
           {/* CTA Button */}
           <button
             onClick={() => window.location.href = "/book"}
-            className="bg-white text-blue-500 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105"
+            className="bg-white text-gray-500 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105 hover:text-black"
           >
             Book Now
           </button>
@@ -71,7 +71,7 @@ const BookAppointmentPage = () => {
             <img
               src="/exchange1.png"
               alt="Doctor consultation illustration"
-              className="w-full h-full object-cover rounded-xl transform scale-105"
+              className="w-96 h-96 object-cover rounded-xl transform scale-105 md:mt-25"
               loading="lazy"
               style={{ maxHeight: '100%' }}
             />

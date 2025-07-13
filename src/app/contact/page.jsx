@@ -120,11 +120,11 @@ const ContactUsPage = () => {
         {/* Page Header with semantic HTML */}
         <header className="relative bg-blue-900 text-white py-12 md:py-20 overflow-hidden">
           <div className="absolute inset-0 bg-blue-800 opacity-90"></div>
-          <div className="container mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-8 md:py-12 text-center md:text-start">
-            <h1 className="mt-14 text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <div className="container  mx-auto relative z-10 px-4 sm:px-6 lg:px-8 py-8 md:py-20 text-center md:text-start">
+            <h1 className="mt-14 md:px-12 text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               Get in Touch with Us
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto md:mx-0">
+            <p className="text-lg md:px-12 sm:text-xl md:text-2xl max-w-2xl mx-auto md:mx-0">
               We're here to answer your questions and assist with your
               diagnostic needs.
             </p>

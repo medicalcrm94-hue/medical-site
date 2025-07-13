@@ -38,7 +38,7 @@ const BookTestPage = () => {
       {/* Page Header */}
       <section className="relative bg-blue-900 px-4 sm:px-6 lg:px-8 text-white py-12 md:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-blue-800 opacity-90"></div>
-        <div className="mt-10 container mx-auto relative z-10 py-8 md:py-12">
+        <div className="mt-10 container md:px-12 mx-auto relative z-10 py-8 md:py-20">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             Book Your Diagnostic Test Easily
           </h1>
@@ -269,7 +269,7 @@ const BookTestPage = () => {
       </div>
 
       {/* CTA Banner */}
-      <section className="bg-blue-900 text-white py-8 md:py-12">
+      <section className="bg-blue-900 text-white py-8 md:py-12 mb-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">
             Ready to book your test or have questions?

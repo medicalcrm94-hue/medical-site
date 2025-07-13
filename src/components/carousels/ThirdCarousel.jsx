@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { MessageCircle, CheckCircle, Clock } from "lucide-react";
 
 const ChatUsPage = () => {
@@ -12,7 +13,7 @@ const ChatUsPage = () => {
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-800 to-teal-900/30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-900 to-teal-950/90" />
       </div>
 
       {/* Content */}
@@ -70,14 +71,16 @@ const ChatUsPage = () => {
         </div>
 
         {/* Right Section with Enlarged Image */}
-        <div className="hidden lg:flex items-center justify-center ml-auto w-2/5 max-w-xl h-full pl-10">
-          <div className="relative w-full h-[32rem]">
-            <img
+        <div className="hidden lg:flex items-center justify-center ml-auto w-[45%] max-w-2xl h-full pl-10">
+          <div className="relative w-full h-[36rem]">
+            <Image
               src="/57.png"
               alt="WhatsApp chat interface"
-              className="w-full h-full object-contain rounded-lg transform scale-105"
+              height={1200}
+              width={1200}
+              className="w-full h-full object-contain rounded-lg transform scale-110"
               loading="lazy"
-              style={{ maxHeight: '100%' }}
+              style={{ maxHeight: "100%" }}
             />
           </div>
         </div>

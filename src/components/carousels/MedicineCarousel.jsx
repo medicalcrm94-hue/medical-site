@@ -12,7 +12,7 @@ const MedicineExchangePage = () => {
           className="w-full h-full object-cover"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500 to-amber-700/90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-700 to-amber-800/90" />
       </div>
 
       {/* Content */}
@@ -20,7 +20,7 @@ const MedicineExchangePage = () => {
         <div className="max-w-2xl text-white">
           {/* Icon Badge with 100Rs off badge */}
           <div className="relative">
-            <div className="bg-amber-400 w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg">
+            <div className="bg-yellow-600 w-14 h-14 rounded-xl flex items-center justify-center mb-6 shadow-lg">
               <RefreshCw className="w-7 h-7 text-white" />
             </div>
             <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
@@ -61,7 +61,7 @@ const MedicineExchangePage = () => {
           <div className="relative">
             <button
               onClick={() => window.location.href = "/medicine-exchange"}
-              className="bg-white text-amber-500 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105 "
+              className="bg-white text-amber-600 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105 "
             >
               View Exchange Policy
             </button>
