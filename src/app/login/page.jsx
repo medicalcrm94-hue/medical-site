@@ -21,7 +21,7 @@ const Login = () => {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:8005/api/users/login", {
+      const res = await fetch("https://medical-deploy-784797008827.europe-west1.run.app/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

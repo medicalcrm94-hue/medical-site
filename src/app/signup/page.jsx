@@ -47,7 +47,7 @@ const Signup = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "http://localhost:8005/api/users/customer-register",
+        "https://medical-deploy-784797008827.europe-west1.run.app/api/users/customer-register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
