@@ -57,7 +57,7 @@ const Signup = () => {
             phoneNumber: formData.phoneNumber,
             address: formData.address,
             password: formData.password,
-            tenantId: "686a595de171a456ba6fc521",
+            tenantId: "6873948b091b5b6f35eb092f",
             role: "customer",
           }),
         }
