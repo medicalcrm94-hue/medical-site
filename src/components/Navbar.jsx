@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Menu, X, UserCircle, ChevronDown, LogOut } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -8,11 +8,9 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  const toggleProfileMenu = () => setIsProfileOpen(!isProfileOpen);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -32,7 +30,6 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
-    setIsProfileOpen(false);
     window.location.href = "/";
   };
 
@@ -140,52 +137,20 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Right Side: Auth Buttons - Compact */}
-          <div className="hidden md:flex items-center space-x-2">
+          {/* Right Side: Only Logout Button when logged in */}
+          <div className="hidden md:flex items-center">
             {isLoggedIn ? (
-              <div className="relative">
-                <button
-                  onClick={toggleProfileMenu}
-                  className="flex items-center space-x-1 focus:outline-none p-1 rounded-md hover:bg-black/5"
-                  aria-label="Profile menu"
-                >
-                  <UserCircle
-                    size={20}
-                    className={`transition-colors duration-300 ${
-                      isHomePage && !isScrolled ? "text-white" : "text-blue-700"
-                    }`}
-                  />
-                  <ChevronDown
-                    size={12}
-                    className={`transition-all duration-300 ${
-                      isProfileOpen ? "rotate-180" : ""
-                    } ${
-                      isHomePage && !isScrolled
-                        ? "text-gray-200"
-                        : "text-gray-600"
-                    }`}
-                  />
-                </button>
-
-                {isProfileOpen && (
-                  <div className="absolute right-0 mt-1 w-36 bg-white rounded-md shadow-lg py-1 z-50">
-                    <Link
-                      href="/profile"
-                      className="block px-3 py-1 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700"
-                      onClick={() => setIsProfileOpen(false)}
-                    >
-                      Profile
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-3 py-1 text-xs text-gray-700 hover:bg-red-50 hover:text-red-700 flex items-center"
-                    >
-                      <LogOut size={12} className="mr-1" />
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
+              <button
+                onClick={handleLogout}
+                className={`px-3 py-1 text-xs rounded-md transition-all duration-300 flex items-center ${
+                  isHomePage && !isScrolled
+                    ? "text-white hover:bg-white/20"
+                    : "text-red-600 hover:bg-red-50"
+                }`}
+              >
+                <LogOut size={14} className="mr-1" />
+                Logout
+              </button>
             ) : (
               <>
                 <Link href="/login">
@@ -201,7 +166,7 @@ const Navbar = () => {
                 </Link>
                 <Link href="/signup">
                   <button
-                    className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ${
+                    className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ml-2 ${
                       isHomePage && !isScrolled
                         ? "bg-white text-blue-700 hover:bg-gray-100"
                         : "bg-blue-600 text-white hover:bg-blue-700"
@@ -253,28 +218,16 @@ const Navbar = () => {
             {/* Mobile Auth Section */}
             <div className="pt-3 border-t border-gray-200 space-y-2">
               {isLoggedIn ? (
-                <>
-                  <Link
-                    href="/profile"
-                    className="block"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <button className="w-full flex items-center justify-center px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200 text-sm">
-                      <UserCircle size={16} className="mr-2" />
-                      Profile
-                    </button>
-                  </Link>
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      handleLogout();
-                    }}
-                    className="w-full flex items-center justify-center px-3 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition duration-200 text-sm"
-                  >
-                    <LogOut size={16} className="mr-2" />
-                    Logout
-                  </button>
-                </>
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    handleLogout();
+                  }}
+                  className="w-full flex items-center justify-center px-3 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition duration-200 text-sm"
+                >
+                  <LogOut size={16} className="mr-2" />
+                  Logout
+                </button>
               ) : (
                 <div className="grid grid-cols-2 gap-2">
                   <Link href="/login" onClick={() => setIsOpen(false)}>
