@@ -26,7 +26,7 @@ const ChatUsPage = () => {
 
           {/* Title */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 leading-tight">
-            Chat with Pharmacist
+            Chat with Doctor
           </h1>
 
           {/* Subtitle */}

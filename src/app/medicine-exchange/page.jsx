@@ -15,7 +15,6 @@ import {
   Award,
   Plus,
   Minus,
-  Check,
   HandHeart,
   Coins,
   ShoppingCart,
