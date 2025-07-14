@@ -17,7 +17,7 @@ const MedicalCarousel = () => {
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev === 3 ? 0 : prev + 1));
-    }, 10000); // Changed from 7000 to 10000 to match pause duration
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying, currentIndex]);
@@ -38,7 +38,7 @@ const MedicalCarousel = () => {
 
   const handleInteraction = () => {
     setIsAutoPlaying(false);
-    setTimeout(() => setIsAutoPlaying(true), 10000); // Pause for 10 seconds
+    setTimeout(() => setIsAutoPlaying(true), 10000);
   };
 
   const goToPrevious = () => {
@@ -65,7 +65,7 @@ const MedicalCarousel = () => {
 
   return (
     <div
-      className="relative w-full h-[100vh] max-h-[700px] min-h-[500px] overflow-hidden rounded-b-xl shadow-2xl"
+      className="mt-10 relative w-full h-[80vh] sm:h-[90vh] max-h-[800px] min-h-[600px] sm:min-h-[500px] overflow-hidden rounded-b-xl shadow-xl sm:shadow-2xl"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -102,31 +102,31 @@ const MedicalCarousel = () => {
         </div>
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Navigation Arrows - Hidden on mobile */}
       <button
         onClick={goToPrevious}
-        className="absolute left-4 top-1/2 z-20 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 p-3 rounded-full backdrop-blur-sm transition-all hover:scale-110"
+        className="hidden sm:block absolute left-2 sm:left-4 top-1/2 z-20 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 p-2 sm:p-3 rounded-full backdrop-blur-sm transition-all hover:scale-110"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="w-6 h-6 text-white" />
+        <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
       </button>
       <button
         onClick={goToNext}
-        className="absolute right-4 top-1/2 z-20 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 p-3 rounded-full backdrop-blur-sm transition-all hover:scale-110"
+        className="hidden sm:block absolute right-2 sm:right-4 top-1/2 z-20 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 p-2 sm:p-3 rounded-full backdrop-blur-sm transition-all hover:scale-110"
         aria-label="Next slide"
       >
-        <ChevronRight className="w-6 h-6 text-white" />
+        <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
       </button>
 
       {/* Enhanced Dots Indicator */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3 z-20">
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
         {[0, 1, 2, 3].map((index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 ${
               index === currentIndex
-                ? "bg-white w-8 scale-110"
+                ? "bg-white w-6 sm:w-8 scale-110"
                 : "bg-white/50 hover:bg-white/70"
             }`}
             aria-label={`Go to slide ${index + 1}`}
