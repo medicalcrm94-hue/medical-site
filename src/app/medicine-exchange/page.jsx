@@ -21,7 +21,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import MedicineExchangeCarousel from "@/components/carousels/MedicineCarousel";
-
+import ProtectedRoute from "@/components/ProtectedRoute";
 function App() {
   const [openFaq, setOpenFaq] = useState(null);
   const [formData, setFormData] = useState({

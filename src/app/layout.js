@@ -5,7 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { usePathname, useRouter } from "next/navigation";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
 const geistSans = Geist({
@@ -32,45 +32,52 @@ const WhatsAppButton = () => (
   </a>
 );
 
-const HIDDEN_LAYOUT_PATHS = ["/login", "/signup"];
+const AUTH_PATHS = ["/login", "/signup"];
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
-
-  const hideLayout = useMemo(
-    () => HIDDEN_LAYOUT_PATHS.includes(pathname),
-    [pathname]
-  );
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  
+  const shouldHideLayout = useMemo(() => {
+    return AUTH_PATHS.includes(pathname);
+  }, [pathname]);
 
   useEffect(() => {
-    // Skip auth check for auth pages and home page
-    if (HIDDEN_LAYOUT_PATHS.includes(pathname)) return;
-    if (pathname === "/home") return;
+    setIsCheckingAuth(true);
+    const token = localStorage.getItem('token');
 
-    const token = localStorage.getItem("token");
-    if (pathname === "/") {
-      // Handle root path redirect
+    // Skip auth check for auth pages
+    if (AUTH_PATHS.includes(pathname)) {
+      setIsCheckingAuth(false);
+      return;
+    }
+
+    if (pathname === '/') {
       if (token) {
-        router.push("/home");
+        router.push('/home');
       } else {
-        router.push("/login");
+        router.push('/login');
       }
     } else if (!token) {
-      // Redirect to login if trying to access any protected page without auth
-      router.push("/login");
+      router.push('/login');
+    } else {
+      setIsCheckingAuth(false);
     }
   }, [pathname, router]);
 
+  // Show nothing while checking auth to prevent layout flash
+  if (isCheckingAuth && (pathname === '/' || !AUTH_PATHS.includes(pathname))) {
+    return null;
+  }
+
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {!hideLayout && <Navbar />}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {!shouldHideLayout && <Navbar />}
         {children}
-        {!hideLayout && <Footer />}
-        {!hideLayout && <WhatsAppButton />}
+        {!shouldHideLayout && <Footer />}
+        {!shouldHideLayout && <WhatsAppButton />}
       </body>
     </html>
   );
