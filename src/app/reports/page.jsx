@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const DownloadReportPage = () => {
   const [formData, setFormData] = useState({
@@ -79,6 +80,7 @@ const DownloadReportPage = () => {
   };
 
   return (
+    <ProtectedRoute>
     <div className="font-sans text-gray-800 bg-gray-50 min-h-screen">
       {/* Page Header */}
       <section className="relative bg-blue-900 text-white py-20 md:py-28 overflow-hidden">
@@ -333,6 +335,7 @@ const DownloadReportPage = () => {
         </div>
       </section>
     </div>
+    </ProtectedRoute>
   );
 };
 

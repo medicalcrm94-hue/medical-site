@@ -3,18 +3,15 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function Home() {
+export default function ProtectedRoute({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if token exists
     const token = localStorage.getItem('token');
-    if (token) {
-      router.push('/home');
-    } else {
+    if (!token) {
       router.push('/login');
     }
   }, [router]);
 
-  return null;
+  return children;
 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Phone, Lock, ArrowRight, AlertCircle } from "lucide-react";
 
-const Login = () => {
+export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({ phoneNumber: "", password: "" });
   const [error, setError] = useState("");
@@ -31,15 +31,14 @@ const Login = () => {
 
       if (!res.ok) throw new Error(data.message || "Login failed");
 
-      localStorage.setItem("token", data.token); // store JWT
-      router.push("/"); // redirect after login
+      localStorage.setItem("token", data.token);
+      router.push("/home"); // Redirect to home after login
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4 py-8">
       <div className="w-full max-w-md">
@@ -167,5 +166,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;

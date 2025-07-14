@@ -15,7 +15,7 @@ import {
   Check,
 } from "lucide-react";
 
-const Signup = () => {
+const SignupPage = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
@@ -39,18 +39,26 @@ const Signup = () => {
     e.preventDefault();
     setError("");
 
+    // Client-side validation
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
 
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
     setLoading(true);
     try {
-      const res = await fetch(
+      const response = await fetch(
         "https://medical-deploy-784797008827.europe-west1.run.app/api/users/customer-register",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             name: formData.name,
             userID: formData.userID,
@@ -63,14 +71,21 @@ const Signup = () => {
         }
       );
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (!res.ok) throw new Error(data.message || "Signup failed");
+      if (!response.ok) {
+        throw new Error(
+          data.message || "Registration failed. Please try again."
+        );
+      }
 
+      // Store token and redirect to home
       localStorage.setItem("token", data.token);
-      router.push("/");
+      router.push("/home");
     } catch (err) {
-      setError(err.message);
+      setError(
+        err.message || "An unexpected error occurred. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -80,6 +95,14 @@ const Signup = () => {
     formData.password &&
     formData.confirmPassword &&
     formData.password === formData.confirmPassword;
+
+  const isFormValid =
+    formData.name &&
+    formData.userID &&
+    formData.phoneNumber &&
+    formData.address &&
+    formData.password &&
+    passwordsMatch;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4 py-8">
@@ -104,7 +127,7 @@ const Signup = () => {
                 htmlFor="name"
                 className="block text-sm font-semibold text-gray-700"
               >
-                Full Name
+                Full Name <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -115,6 +138,7 @@ const Signup = () => {
                   type="text"
                   name="name"
                   required
+                  minLength={3}
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
@@ -129,7 +153,7 @@ const Signup = () => {
                 htmlFor="userID"
                 className="block text-sm font-semibold text-gray-700"
               >
-                User ID
+                User ID <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -140,6 +164,7 @@ const Signup = () => {
                   type="text"
                   name="userID"
                   required
+                  minLength={4}
                   value={formData.userID}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
@@ -154,7 +179,7 @@ const Signup = () => {
                 htmlFor="phoneNumber"
                 className="block text-sm font-semibold text-gray-700"
               >
-                Phone Number
+                Phone Number <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -165,10 +190,11 @@ const Signup = () => {
                   type="tel"
                   name="phoneNumber"
                   required
+                  pattern="[0-9]{10}"
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
-                  placeholder="Enter your phone number"
+                  placeholder="Enter 10-digit phone number"
                 />
               </div>
             </div>
@@ -179,7 +205,7 @@ const Signup = () => {
                 htmlFor="address"
                 className="block text-sm font-semibold text-gray-700"
               >
-                Address
+                Address <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -190,10 +216,11 @@ const Signup = () => {
                   type="text"
                   name="address"
                   required
+                  minLength={5}
                   value={formData.address}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
-                  placeholder="Enter your address"
+                  placeholder="Enter your full address"
                 />
               </div>
             </div>
@@ -204,7 +231,7 @@ const Signup = () => {
                 htmlFor="password"
                 className="block text-sm font-semibold text-gray-700"
               >
-                Password
+                Password <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -215,15 +242,17 @@ const Signup = () => {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   required
+                  minLength={6}
                   value={formData.password}
                   onChange={handleChange}
                   className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
-                  placeholder="Create a strong password"
+                  placeholder="Create a password (min 6 characters)"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-blue-600 transition-colors duration-200"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5 text-gray-400" />
@@ -240,7 +269,7 @@ const Signup = () => {
                 htmlFor="confirmPassword"
                 className="block text-sm font-semibold text-gray-700"
               >
-                Confirm Password
+                Confirm Password <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -251,6 +280,7 @@ const Signup = () => {
                   type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   required
+                  minLength={6}
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400 ${
@@ -270,6 +300,9 @@ const Signup = () => {
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="hover:text-blue-600 transition-colors duration-200"
+                    aria-label={
+                      showConfirmPassword ? "Hide password" : "Show password"
+                    }
                   >
                     {showConfirmPassword ? (
                       <EyeOff className="h-5 w-5 text-gray-400" />
@@ -298,8 +331,12 @@ const Signup = () => {
             {/* Signup Button */}
             <button
               type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg hover:shadow-xl"
+              disabled={loading || !isFormValid}
+              className={`w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg hover:shadow-xl ${
+                loading || !isFormValid
+                  ? "opacity-50 cursor-not-allowed hover:scale-100"
+                  : "hover:bg-blue-700"
+              }`}
             >
               <div className="flex items-center justify-center space-x-2">
                 {loading ? (
@@ -349,4 +386,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;
