@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import React from "react";
 import { Calendar, CheckCircle, Clock } from "lucide-react";
@@ -60,12 +61,11 @@ const BookAppointmentPage = () => {
           </div>
 
           {/* CTA Button */}
-          <button
-            onClick={() => (window.location.href = "/book")}
-            className="bg-white text-gray-500 px-6 py-3 lg:px-8 lg:py-4 rounded-xl font-bold text-base lg:text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105 hover:text-black w-full sm:w-auto"
-          >
-            Book Now
-          </button>
+          <Link href="/book#second-section">
+            <button className="bg-white text-gray-500 px-6 py-3 lg:px-8 lg:py-4 rounded-xl font-bold text-base lg:text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105 hover:text-black w-full sm:w-auto">
+              Book Now
+            </button>
+          </Link>
 
           {/* Urgency Indicator */}
           <div className="mt-3 lg:mt-4 flex items-center text-white/80">

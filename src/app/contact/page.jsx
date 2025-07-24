@@ -174,7 +174,12 @@ const ContactUsPage = () => {
                           Address
                         </h3>
                         <p className="text-gray-600">
-                          123 Medical Street, Hyderabad, India - 500001
+                          Main branch:Lara health care House no:1, porteco,
+                          chintala gorlevanipalem, parawada, visakhapatnam
+                          <br />
+                          <br />
+                          Branch office: 46-1,Aditya nagar , chanakyapuri
+                          colony,A camp , kurnool, andhrapradesh 518002
                         </p>
                       </div>
                     </div>
@@ -283,11 +288,11 @@ const ContactUsPage = () => {
                         For urgent medical testing needs outside working hours,
                         please call our emergency line at{" "}
                         <a
-                          href="tel:+919876543211"
+                          href="tel:+91 6309583777"
                           className="text-blue-900 hover:underline"
-                          aria-label="Emergency number +91-98765-43211"
+                          aria-label="Emergency number +91-6309583777"
                         >
-                          +91-98765-43211
+                          +91-6309583777
                         </a>
                         .
                       </p>
@@ -568,16 +573,16 @@ const ContactUsPage = () => {
               </h2>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <a
-                  href="/book-test"
+                  href="/book#second-section"
                   className="bg-white text-blue-900 px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"
                   aria-label="Book a test online"
                 >
                   Book a Test
                 </a>
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+916309583777"
                   className="border-2 border-white px-6 sm:px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-900 transition focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-900"
-                  aria-label="Call us at +91-98765-43210"
+                  aria-label="Call us at +91-6309583777"
                 >
                   Call Us
                 </a>

@@ -48,8 +48,8 @@ const OrderForm = () => {
     address: "",
     addressLine1: "",
     addressLine2: "",
-    city: "",
-    stateProvince: "",
+    city: "Kurnool",
+    stateProvince: "Andhra Pradesh",
     postalCode: "",
     country: "",
     location: "",
@@ -360,21 +360,18 @@ const OrderForm = () => {
     }
   };
 
-  const createQrProcessUnits = async () => {
+  const createQrProcessUnits = async (orderId, units, subUnits) => {
     let totalQrUnits = 0;
-    for (let i = 0; i < Number(formData.units.length); i++) {
-      if (Number(formData.subUnits[i].length) > 0) {
-        totalQrUnits += formData.subUnits[i].reduce(
-          (acc, val) => acc + Number(val),
-          0
-        );
+    for (let i = 0; i < Number(units.length); i++) {
+      if (Number(subUnits[i].length) > 0) {
+        totalQrUnits += subUnits[i].reduce((acc, val) => acc + Number(val), 0);
       } else {
-        totalQrUnits += Number(formData.units[i]);
+        totalQrUnits += Number(units[i]);
       }
     }
     try {
       const response = await api.post(`api/qr-process/add/units`, {
-        orderID: formData.orderId,
+        orderID: orderId,
         units: totalQrUnits,
       });
       if (response.data.success) {
@@ -391,16 +388,15 @@ const OrderForm = () => {
     e.preventDefault();
     setSubmitionLoading(true);
 
-    if (orders.length !== 0) {
-      formData.orderId = generateNewOrderId(orders[0].orderId);
-    } else {
-      formData.orderId = generateNewOrderId("0");
-    }
-    formData.totalPrice = totalPrice - Number(formData.discount);
+    const newOrderId =
+      orders.length !== 0
+        ? generateNewOrderId(orders[0].orderId)
+        : generateNewOrderId("0");
+    const finalPrice = totalPrice - Number(formData.discount);
 
     try {
       await api.post(`api/orders`, {
-        orderId: formData.orderId,
+        orderId: newOrderId,
         name: formData.name,
         phoneNumber: formData.phoneNumber,
         products: formData.products,
@@ -414,10 +410,15 @@ const OrderForm = () => {
         dateOfDelivery: formData.dateOfDelivery,
         mode: formData.mode,
         paymentStatus: formData.paymentStatus,
-        totalPrice: formData.totalPrice,
+        totalPrice: finalPrice,
         delivery: formData.delivery,
         discount: formData.discount,
       });
+
+      // Now, call the other functions with the newOrderId
+      await createQrProcessUnits(newOrderId, formData.units, formData.subUnits);
+      await saveCustomerDetails(newOrderId);
+      await processAssign(newOrderId);
 
       setFormData({
         orderId: "",
@@ -433,8 +434,8 @@ const OrderForm = () => {
         address: "",
         addressLine1: "",
         addressLine2: "",
-        city: "",
-        stateProvince: "",
+        city: "Kurnool",
+        stateProvince: "Andhra Pradesh",
         postalCode: "",
         country: "",
         location: "",
@@ -452,18 +453,14 @@ const OrderForm = () => {
         dateOfBirth: "",
       });
 
-      console.log("form data" + JSON.stringify(formData));
-
       fetchOrders();
       setSelectedProducts([]);
       setTotalPrice(0);
-      createQrProcessUnits();
       setShowForm(false);
-      saveCustomerDetails(formData.orderId);
-      processAssign(formData.orderId);
       setError("");
     } catch (err) {
       setError("Failed to submit order");
+      console.error(err); // It's a good practice to log the actual error
     } finally {
       alert("Order Submitted Successfully");
       setSubmitionLoading(false);
@@ -903,10 +900,10 @@ const OrderForm = () => {
                 <input
                   type="text"
                   name="city"
-                  value={formData.city}
-                  placeholder="City"
-                  onChange={handleAddressChange}
-                  className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                  value="Kurnool"
+                  disabled
+                  placeholder="only available in Kurnool, Andhra Pradesh"
+                  className="border border-blue-300 p-2 rounded w-full bg-gray-100 focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
                 />
               </div>
               <div>
@@ -919,10 +916,9 @@ const OrderForm = () => {
                 <input
                   type="text"
                   name="stateProvince"
-                  value={formData.stateProvince}
-                  placeholder="State/Province"
-                  onChange={handleAddressChange}
-                  className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                  value="Andhra Pradesh"
+                  disabled
+                  className="border border-blue-300 p-2 rounded w-full bg-gray-100 focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
                 />
               </div>
               <div>
@@ -955,101 +951,103 @@ const OrderForm = () => {
                 onChange={handleAddressChange}
                 className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
               />
-            
 
-            <button
-              type="button"
-              onClick={() => setShowCustomerDetails(!showCustomerDetails)}
-              className="text-blue-600 hover:text-blue-800 text-sm font-medium mb-4"
-            ></button>
-            <div className="rounded-lg mt-2">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
+              <button
+                type="button"
+                onClick={() => setShowCustomerDetails(!showCustomerDetails)}
+                className="text-blue-600 hover:text-blue-800 text-sm font-medium mb-4"
+              ></button>
+              <div className="rounded-lg mt-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label
+                      htmlFor="emailAddress"
+                      className="block text-blue-700 mb-1"
+                    >
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="emailAddress"
+                      value={formData.emailAddress}
+                      placeholder="Email Address"
+                      onChange={handleChange}
+                      className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="gender"
+                      className="block text-blue-700 mb-1"
+                    >
+                      Gender
+                    </label>
+                    <select
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                      <option value="Prefer Not Say">Prefer Not to Say</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="mb-4">
                   <label
-                    htmlFor="emailAddress"
+                    htmlFor="dateOfBirth"
                     className="block text-blue-700 mb-1"
                   >
-                    Email Address
+                    Date of Birth
                   </label>
                   <input
-                    type="email"
-                    name="emailAddress"
-                    value={formData.emailAddress}
-                    placeholder="Email Address"
+                    type="date"
+                    name="dateOfBirth"
+                    value={formData.dateOfBirth}
                     onChange={handleChange}
                     className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
                   />
                 </div>
-                <div>
-                  <label htmlFor="gender" className="block text-blue-700 mb-1">
-                    Gender
-                  </label>
-                  <select
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                  >
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                    <option value="Prefer Not Say">Prefer Not to Say</option>
-                  </select>
-                </div>
-              </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="dateOfBirth"
-                  className="block text-blue-700 mb-1"
-                >
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  name="dateOfBirth"
-                  value={formData.dateOfBirth}
-                  onChange={handleChange}
-                  className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label
-                    htmlFor="emergencyContactName"
-                    className="block text-blue-700 mb-1"
-                  >
-                    Emergency Contact Name
-                  </label>
-                  <input
-                    type="text"
-                    name="emergencyContactName"
-                    value={formData.emergencyContactName}
-                    placeholder="Emergency Contact Name"
-                    onChange={handleChange}
-                    className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="emergencyContactNumber"
-                    className="block text-blue-700 mb-1"
-                  >
-                    Emergency Contact Number
-                  </label>
-                  <input
-                    type="text"
-                    name="emergencyContactNumber"
-                    value={formData.emergencyContactNumber}
-                    placeholder="Emergency Contact Number"
-                    onChange={handleChange}
-                    className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label
+                      htmlFor="emergencyContactName"
+                      className="block text-blue-700 mb-1"
+                    >
+                      Emergency Contact Name
+                    </label>
+                    <input
+                      type="text"
+                      name="emergencyContactName"
+                      value={formData.emergencyContactName}
+                      placeholder="Emergency Contact Name"
+                      onChange={handleChange}
+                      className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="emergencyContactNumber"
+                      className="block text-blue-700 mb-1"
+                    >
+                      Emergency Contact Number
+                    </label>
+                    <input
+                      type="text"
+                      name="emergencyContactNumber"
+                      value={formData.emergencyContactNumber}
+                      placeholder="Emergency Contact Number"
+                      onChange={handleChange}
+                      className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
 
@@ -1129,6 +1127,7 @@ const OrderForm = () => {
                 <option value="Net Banking">Net Banking</option>
               </select>
             </div>
+            {/* THIS IS THE NEW DROPDOWN */}
             <div>
               <label
                 htmlFor="paymentStatus"
@@ -1146,9 +1145,9 @@ const OrderForm = () => {
                 <option disabled value="">
                   Select Payment Status
                 </option>
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
                 <option value="Pending">Pending</option>
-                <option value="Completed">Completed</option>
-                <option value="Failed">Failed</option>
               </select>
             </div>
           </div>

@@ -4,7 +4,6 @@ import OrderForm from "@/components/OrderForm";
 import React, { useState } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-
 const BookTestPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
 
@@ -212,8 +211,10 @@ const BookTestPage = () => {
                       Home Sample Collection
                     </h4>
                     <p className="text-gray-700 text-xs sm:text-sm">
-                      Available across Hyderabad and surrounding areas. We
-                      follow all COVID-19 safety protocols.
+                      Main branch:Lara health care House no:1, porteco, chintala
+                      gorlevanipalem, parawada, visakhapatnam Branch office:
+                      46-1,Aditya nagar , chanakyapuri colony,A camp , kurnool,
+                      andhrapradesh 518002
                     </p>
                   </div>
 
