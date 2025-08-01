@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Your App Name",
-  description: "App description here",
+  title: "Lara healthcare",
+  description: "",
 };
 
 export default function RootLayout({ children }) {
