@@ -100,7 +100,6 @@ const TestsServicesPage = () => {
   ];
 
   return (
-    <ProtectedRoute>
       <div className="font-sans text-gray-800">
         {/* Page Header */}
         <section className="relative bg-blue-600 opacity-95 text-white py-16 sm:py-20 md:py-28 px-4 sm:px-8 md:px-12 lg:px-20">
@@ -176,9 +175,14 @@ const TestsServicesPage = () => {
                         </li>
                       ))}
                     </ul>
-                    <button className="mt-4 text-blue-900 font-medium hover:underline text-sm sm:text-base">
+                    {/* <button className="mt-4 text-blue-900 font-medium hover:underline text-sm sm:text-base">
                       View all {category.name} →
+                    </button> */}
+                    <Link href='/book#second-section'>
+                    <button className="mt-4 text-blue-900 font-medium hover:underline text-sm sm:text-base">
+                      Book a test →
                     </button>
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -234,7 +238,6 @@ const TestsServicesPage = () => {
           </div>
         </section>
       </div>
-    </ProtectedRoute>
   );
 };
 

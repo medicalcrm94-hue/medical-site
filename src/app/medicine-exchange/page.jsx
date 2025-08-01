@@ -20,7 +20,6 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import MedicineExchangeCarousel from "@/components/carousels/MedicineCarousel";
-import ProtectedRoute from "@/components/ProtectedRoute";
 function App() {
   const [openFaq, setOpenFaq] = useState(null);
   const [formData, setFormData] = useState({
@@ -102,7 +101,6 @@ function App() {
   ];
 
   return (
-    <ProtectedRoute>
       <div className="min-h-screen bg-white">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-blue-50 via-green-50 to-orange-50 py-20 px-4 sm:px-6 lg:px-8">
@@ -505,7 +503,6 @@ function App() {
           </div>
         </section>
       </div>
-    </ProtectedRoute>
   );
 }
 

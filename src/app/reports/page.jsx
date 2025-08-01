@@ -1,7 +1,7 @@
 "use client";
+import Link from "next/link";
 
 import React, { useState } from "react";
-import ProtectedRoute from "@/components/ProtectedRoute";
 
 const DownloadReportPage = () => {
   const [formData, setFormData] = useState({
@@ -80,7 +80,6 @@ const DownloadReportPage = () => {
   };
 
   return (
-    <ProtectedRoute>
     <div className="font-sans text-gray-800 bg-gray-50 min-h-screen">
       {/* Page Header */}
       <section className="relative bg-blue-900 text-white py-20 md:py-28 overflow-hidden">
@@ -329,13 +328,14 @@ const DownloadReportPage = () => {
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
             Need to book a Appointment first?
           </h2>
+          <Link href='/book#second-section'>
           <button className="bg-white text-blue-900 px-8 py-3 rounded-lg font-semibold hover:bg-blue-100 transition">
             Book a Appointment
           </button>
+          </Link>
         </div>
       </section>
     </div>
-    </ProtectedRoute>
   );
 };
 

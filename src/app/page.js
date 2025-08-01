@@ -1,20 +1,12 @@
-"use client";
+import React from 'react'
+import NameLabHome from './home/page'
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-
-export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // Check if token exists
-    const token = localStorage.getItem('token');
-    if (token) {
-      router.push('/home');
-    } else {
-      router.push('/login');
-    }
-  }, [router]);
-
-  return null;
+function Page() {
+  return (
+    <div>
+      <NameLabHome/>
+    </div>
+  )
 }
+
+export default Page;

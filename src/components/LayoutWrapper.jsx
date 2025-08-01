@@ -1,8 +1,7 @@
 // components/LayoutWrapper.jsx
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { useMemo, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { FaWhatsapp } from "react-icons/fa";
@@ -23,41 +22,13 @@ const WhatsAppButton = () => (
 
 export default function LayoutWrapper({ children }) {
   const pathname = usePathname();
-  const router = useRouter();
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
-  const shouldHideLayout = useMemo(() => AUTH_PATHS.includes(pathname), [pathname]);
-
-  useEffect(() => {
-    setIsCheckingAuth(true);
-    const token = localStorage.getItem("token");
-
-    if (AUTH_PATHS.includes(pathname)) {
-      setIsCheckingAuth(false);
-      return;
-    }
-
-    if (pathname === "/") {
-      if (token) {
-        router.push("/home");
-      } else {
-        router.push("/login");
-      }
-    } else if (!token) {
-      router.push("/login");
-    } else {
-      setIsCheckingAuth(false);
-    }
-  }, [pathname, router]);
-
-  if (isCheckingAuth && (pathname === "/" || !AUTH_PATHS.includes(pathname))) {
-    return null;
-  }
+  const shouldHideLayout = AUTH_PATHS.includes(pathname);
 
   return (
     <>
       {!shouldHideLayout && <Navbar />}
-      {children}
+      <main className="min-h-[calc(100vh-64px)]">{children}</main>
       {!shouldHideLayout && <Footer />}
       {!shouldHideLayout && <WhatsAppButton />}
     </>

@@ -8,23 +8,12 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleLogout = () => {
@@ -34,7 +23,6 @@ const Navbar = () => {
   };
 
   const isActive = (href) => pathname === href;
-  const isHomePage = pathname === "/";
 
   // Compact nav links with shorter text
   const navLinks = [
@@ -44,16 +32,12 @@ const Navbar = () => {
     { href: "/pricing", text: "Pricing" },
     { href: "/book", text: "Book" },
     { href: "/reports", text: "Reports" },
-    { href: "/medicine-exchange", text: "Exchange" },
+    // { href: "/medicine-exchange", text: "Exchange" },
     { href: "/contact", text: "Contact" },
   ];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isHomePage && !isScrolled ? "bg-transparent" : "bg-white shadow-md"
-      }`}
-    >
+    <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
         <div className="flex items-center justify-between h-12 sm:h-14">
           {/* Logo */}
@@ -61,10 +45,10 @@ const Navbar = () => {
             <Link href="/">
               <img
                 src="/logo.jpg"
-                height={40}
-                width={40}
+                height={400}
+                width={400}
                 alt="Company Logo"
-                className="h-8 w-8 sm:h-9 sm:w-9 object-contain"
+                className="h-20 w-20 object-cover"
               />
             </Link>
           </div>
@@ -77,11 +61,7 @@ const Navbar = () => {
                 href={link.href}
                 className={`px-2 xl:px-3 py-1 text-xs xl:text-sm font-medium rounded-md transition-all duration-200 ${
                   isActive(link.href)
-                    ? isHomePage && !isScrolled
-                      ? "text-white bg-white/10"
-                      : "text-blue-700 bg-blue-50"
-                    : isHomePage && !isScrolled
-                    ? "text-gray-200 hover:text-white hover:bg-white/10"
+                    ? "text-blue-700 bg-blue-50"
                     : "text-gray-700 hover:text-blue-700 hover:bg-blue-50"
                 }`}
               >
@@ -98,11 +78,7 @@ const Navbar = () => {
                 href={link.href}
                 className={`px-2 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
                   isActive(link.href)
-                    ? isHomePage && !isScrolled
-                      ? "text-white bg-white/10"
-                      : "text-blue-700 bg-blue-50"
-                    : isHomePage && !isScrolled
-                    ? "text-gray-200 hover:text-white hover:bg-white/10"
+                    ? "text-blue-700 bg-blue-50"
                     : "text-gray-700 hover:text-blue-700 hover:bg-blue-50"
                 }`}
               >
@@ -112,11 +88,7 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={toggleMenu}
-                className={`px-2 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
-                  isHomePage && !isScrolled
-                    ? "text-gray-200 hover:text-white hover:bg-white/10"
-                    : "text-gray-700 hover:text-blue-700 hover:bg-blue-50"
-                }`}
+                className="px-2 py-1 text-xs font-medium rounded-md transition-all duration-200 text-gray-700 hover:text-blue-700 hover:bg-blue-50"
               >
                 More
               </button>
@@ -142,11 +114,7 @@ const Navbar = () => {
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className={`px-3 py-1 text-xs rounded-md transition-all duration-300 flex items-center ${
-                  isHomePage && !isScrolled
-                    ? "text-white hover:bg-white/20"
-                    : "text-red-600 hover:bg-red-50"
-                }`}
+                className="px-3 py-1 text-xs rounded-md transition-all duration-300 flex items-center text-red-600 hover:bg-red-50"
               >
                 <LogOut size={14} className="mr-1" />
                 Logout
@@ -154,24 +122,12 @@ const Navbar = () => {
             ) : (
               <>
                 <Link href="/login">
-                  <button
-                    className={`px-3 py-1 text-xs border rounded-md transition-all duration-300 ${
-                      isHomePage && !isScrolled
-                        ? "border-white text-white hover:bg-white hover:text-blue-700"
-                        : "border-blue-600 text-blue-600 hover:bg-blue-50"
-                    }`}
-                  >
+                  <button className="px-3 py-1 text-xs border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition-all duration-300">
                     Login
                   </button>
                 </Link>
                 <Link href="/signup">
-                  <button
-                    className={`px-3 py-1 text-xs rounded-md transition-all duration-300 ml-2 ${
-                      isHomePage && !isScrolled
-                        ? "bg-white text-blue-700 hover:bg-gray-100"
-                        : "bg-blue-600 text-white hover:bg-blue-700"
-                    }`}
-                  >
+                  <button className="px-3 py-1 text-xs rounded-md transition-all duration-300 ml-2 bg-blue-600 text-white hover:bg-blue-700">
                     Signup
                   </button>
                 </Link>
@@ -183,11 +139,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className={`focus:outline-none transition-colors duration-300 p-1 ${
-                isHomePage && !isScrolled
-                  ? "text-white hover:text-gray-200"
-                  : "text-gray-700 hover:text-blue-700"
-              }`}
+              className="focus:outline-none transition-colors duration-300 p-1 text-gray-700 hover:text-blue-700"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={20} /> : <Menu size={20} />}

@@ -2,7 +2,6 @@
 import Link from "next/link";
 import OrderForm from "@/components/OrderForm";
 import React, { useState } from "react";
-import ProtectedRoute from "@/components/ProtectedRoute";
 
 const BookTestPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -35,7 +34,7 @@ const BookTestPage = () => {
   };
 
   return (
-    <ProtectedRoute>
+    
       <div className="font-sans text-gray-800 bg-gray-50 min-h-screen">
         {/* Page Header */}
         <section className="relative bg-blue-900 px-4 sm:px-6 lg:px-8 text-white py-12 md:py-20 overflow-hidden">
@@ -64,7 +63,6 @@ const BookTestPage = () => {
                 Test Booking Form
               </h2>
               <OrderForm />
-
               {/* How Booking Works */}
               <div className="mt-8 md:mt-12 bg-white rounded-xl shadow-md p-4 sm:p-6 md:p-8">
                 <h2 className="text-xl sm:text-2xl font-bold text-blue-900 mb-4 sm:mb-6">
@@ -295,7 +293,6 @@ const BookTestPage = () => {
           </div>
         </section>
       </div>
-    </ProtectedRoute>
   );
 };
 

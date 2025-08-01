@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import ProtectedRoute from "@/components/ProtectedRoute";
 
 const PriceListPage = () => {
   const priceData = [
@@ -31,7 +30,6 @@ const PriceListPage = () => {
   ];
 
   return (
-    <ProtectedRoute>
       <div className="font-sans text-gray-800 bg-gray-50 min-h-screen">
         {/* Page Header */}
         <section className="relative bg-blue-700 opacity-90 text-white py-16 sm:py-20 md:py-28 px-4 sm:px-8 md:px-12 lg:px-20">
@@ -175,7 +173,6 @@ const PriceListPage = () => {
           </div>
         </section>
       </div>
-    </ProtectedRoute>
   );
 };
 

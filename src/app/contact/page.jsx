@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Head from "next/head";
 
-import ProtectedRoute from "@/components/ProtectedRoute";
 
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
@@ -93,7 +92,6 @@ const ContactUsPage = () => {
 
   return (
     <>
-      <ProtectedRoute>
         <Head>
           <title>
             Contact Us | Diagnostic Lab Name - Get in Touch for Testing Services
@@ -590,7 +588,6 @@ const ContactUsPage = () => {
             </div>
           </section>
         </div>
-      </ProtectedRoute>
     </>
   );
 };

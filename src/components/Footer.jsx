@@ -13,13 +13,16 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Column 1: Logo & About */}
         <div>
+          <div className="bg-white max-w-30">
+
           <img
-            className="mb-5"
+            className="mb-5 h-25 w-40 object-contain"
             src="/logo.jpg"
             height={60}
             width={60}
             alt="Error"
-          />
+            />
+            </div>
           <p className="text-sm">
             Trusted medical diagnostics with accurate results and advanced
             technology. Serving hospitals, labs, and individuals since [Year].
@@ -67,7 +70,7 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-3">Contact</h3>
           <p className="text-sm">
-            📍 Main branch : Lara health care House no:1, porteco, chintala
+            📍 Main branch : Lara healthcare House no:1, porteco, chintala
             gorlevanipalem, parawada, visakhapatnam
 
             <br />
