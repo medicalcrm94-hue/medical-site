@@ -16,7 +16,7 @@ const MedicalCarousel = () => {
     if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev === 3 ? 0 : prev + 1));
+      setCurrentIndex((prev) => (prev === 2 ? 0 : prev + 1));
     }, 10000);
 
     return () => clearInterval(interval);
@@ -42,12 +42,12 @@ const MedicalCarousel = () => {
   };
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? 3 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? 2 : prev - 1));
     handleInteraction();
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev === 3 ? 0 : prev + 1));
+    setCurrentIndex((prev) => (prev === 2 ? 0 : prev + 1));
     handleInteraction();
   };
 
@@ -93,13 +93,13 @@ const MedicalCarousel = () => {
         >
           <ChatUsPage />
         </div>
-        <div
+        {/* <div
           className={`absolute inset-0 transition-transform duration-500 ease-in-out ${getSlideStyle(
             3
           )}`}
         >
           <MedicineExchangePage />
-        </div>
+        </div> */}
       </div>
 
       {/* Navigation Arrows - Hidden on mobile */}
@@ -120,7 +120,7 @@ const MedicalCarousel = () => {
 
       {/* Enhanced Dots Indicator */}
       <div className="absolute bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
-        {[0, 1, 2, 3].map((index) => (
+        {[0, 1, 2].map((index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
