@@ -20,7 +20,7 @@ const ContactUsPage = () => {
     {
       question: "Where is the lab located?",
       answer:
-        "Our main lab is located at 123 Medical Street, Hyderabad, India. We're easily accessible by public transport with parking available.",
+        "Our main lab - Lara health care House no:1, porteco, chintala gorlevanipalem, parawada, visakhapatnam, India.",
     },
     {
       question: "What are your working hours?",
@@ -30,7 +30,7 @@ const ContactUsPage = () => {
     {
       question: "How can I book a test?",
       answer:
-        "You can book tests through our online booking system, by calling us at +91-98765-43210, or by visiting our lab in person.",
+        "You can book tests through our online booking system, by calling us at +91-6309583777, or by visiting our lab in person.",
     },
     {
       question: "Do you provide home sample collection?",

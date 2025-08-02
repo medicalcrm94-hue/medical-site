@@ -12,7 +12,7 @@ const Spinner = () => (
 
 export default function Signup() {
   const router = useRouter(); // Initialize router
-  const TENANT_ID = "686a595de171a456ba6fc521"; // Use const for fixed values
+  const TENANT_ID = "6873948b091b5b6f35eb092f"; // Use const for fixed values
 
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -43,7 +43,7 @@ export default function Signup() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8005/api/web-auth/google",
+        "https://medical-deploy-784797008827.europe-west1.run.app/api/web-auth/google",
         {
           credential: response.credential,
           tenantId: TENANT_ID,

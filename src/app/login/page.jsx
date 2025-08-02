@@ -5,14 +5,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-// A simple spinner component for loading state
 const Spinner = () => (
   <div className="border-4 border-t-4 border-gray-200 border-t-blue-600 rounded-full w-8 h-8 animate-spin"></div>
 );
 
 export default function LoginPage() {
   const router = useRouter();
-  const TENANT_ID = "6857d7c73832f6468f9b7dff";
+  const TENANT_ID = "6873948b091b5b6f35eb092f";
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,9 +22,8 @@ export default function LoginPage() {
     const credential = response.credential;
 
     try {
-      // First, try to log in without address and phone number
       const res = await axios.post(
-        "http://localhost:8005/api/web-auth/google",
+        "https://medical-deploy-784797008827.europe-west1.run.app/api/web-auth/google",
         {
           credential,
           tenantId: TENANT_ID,
@@ -34,20 +32,15 @@ export default function LoginPage() {
 
       const { token, customer } = res.data;
 
-      // If a token is returned, the user exists. Log them in.
       if (token) {
         localStorage.setItem("token", token);
         localStorage.setItem("customer", JSON.stringify(customer));
         router.replace("/");
       } else {
-        // If no token, assume it's a new user.
-        // Store credential and redirect to sign-up page.
         sessionStorage.setItem("googleCredential", credential);
         router.push("/signup");
       }
     } catch (err) {
-      // This catch block will likely run for new users if your API returns a 404 or other error.
-      // This is expected. We handle it by redirecting to the sign-up page.
       if (
         err.response &&
         (err.response.status === 404 || err.response.status === 401)
@@ -57,7 +50,6 @@ export default function LoginPage() {
         router.push("/signup");
       } else {
         console.error("Login failed", err);
-        // Get a specific error message from the API response, or fall back to a generic one.
         const errorMessage =
           err.response?.data?.message ||
           err.message ||

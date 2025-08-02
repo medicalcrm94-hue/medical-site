@@ -388,7 +388,7 @@ const NameLabHome = () => {
                 {
                   icon: <Download className="w-6 h-6 sm:w-8 sm:h-8" />,
                   step: "Report Delivery",
-                  desc: "Email, SMS, or mobile app",
+                  desc: "Whatshapp message",
                   color: "bg-orange-500",
                 },
               ].map((item, index) => (

@@ -13,10 +13,10 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Column 1: Logo & About */}
         <div>
-          <div className="bg-white max-w-30">
+          <div className="bg-white max-w-30 rounded-md">
 
           <img
-            className="mb-5 h-25 w-40 object-contain"
+            className="mb-5 h-25 w-40 object-contain "
             src="/logo.jpg"
             height={60}
             width={60}

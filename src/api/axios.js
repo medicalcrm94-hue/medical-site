@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: "https://medical-deploy-784797008827.europe-west1.run.app/",
-  baseURL: "http://localhost:8005/",
+  baseURL: "https://medical-deploy-784797008827.europe-west1.run.app/",
+  // baseURL: "http://localhost:8005/",
 });
 
 api.interceptors.request.use(
