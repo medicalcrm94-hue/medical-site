@@ -1,168 +1,120 @@
 "use client";
 
+import { GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, Phone, Lock, ArrowRight, AlertCircle } from "lucide-react";
+import axios from "axios";
+
+// A simple spinner component for loading state
+const Spinner = () => (
+  <div className="border-4 border-t-4 border-gray-200 border-t-blue-600 rounded-full w-8 h-8 animate-spin"></div>
+);
 
 export default function LoginPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({ phoneNumber: "", password: "" });
+  const TENANT_ID = "6857d7c73832f6468f9b7dff";
+
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleGoogleSuccess = async (response) => {
+    setIsLoading(true);
     setError("");
+    const credential = response.credential;
 
     try {
-      const res = await fetch("https://medical-deploy-784797008827.europe-west1.run.app/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      // First, try to log in without address and phone number
+      const res = await axios.post(
+        "http://localhost:8005/api/web-auth/google",
+        {
+          credential,
+          tenantId: TENANT_ID,
+        }
+      );
 
-      const data = await res.json();
+      const { token, customer } = res.data;
 
-      if (!res.ok) throw new Error(data.message || "Login failed");
-
-      localStorage.setItem("token", data.token);
-      router.push("/home"); // Redirect to home after login
+      // If a token is returned, the user exists. Log them in.
+      if (token) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("customer", JSON.stringify(customer));
+        router.replace("/");
+      } else {
+        // If no token, assume it's a new user.
+        // Store credential and redirect to sign-up page.
+        sessionStorage.setItem("googleCredential", credential);
+        router.push("/signup");
+      }
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      // This catch block will likely run for new users if your API returns a 404 or other error.
+      // This is expected. We handle it by redirecting to the sign-up page.
+      if (
+        err.response &&
+        (err.response.status === 404 || err.response.status === 401)
+      ) {
+        console.log("New user detected. Redirecting to sign-up.");
+        sessionStorage.setItem("googleCredential", credential);
+        router.push("/signup");
+      } else {
+        console.error("Login failed", err);
+        // Get a specific error message from the API response, or fall back to a generic one.
+        const errorMessage =
+          err.response?.data?.message ||
+          err.message ||
+          "An unexpected error occurred. Please try again.";
+        setError(errorMessage);
+        setIsLoading(false);
+      }
     }
   };
+
+  const handleGoogleError = () => {
+    setIsLoading(false);
+    setError("Google login failed. Please try again.");
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4 py-8">
-      <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4 shadow-lg">
-            <Lock className="w-8 h-8 text-white" />
+    <main className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-lg text-center">
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <Spinner />
+            <p className="text-gray-600">Signing you in...</p>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Please sign in to your account</p>
-        </div>
-
-        {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-          <form onSubmit={handleLogin} className="space-y-6">
-            {/* Phone Number Input */}
-            <div className="space-y-2">
-              <label htmlFor="phoneNumber" className="block text-sm font-semibold text-gray-700">
-                Phone Number
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Phone className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="phoneNumber"
-                  type="tel"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
-                  placeholder="Enter your phone number"
-                />
-              </div>
+        ) : (
+          <>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Sign In</h1>
+              <p className="mt-2 text-sm text-gray-600">
+                Welcome back! Please sign in with your Google account.
+              </p>
             </div>
 
-            {/* Password Input */}
-            <div className="space-y-2">
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-700">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-400"
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-blue-600 transition-colors duration-200"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Error Message */}
             {error && (
-              <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">
-                <AlertCircle className="h-5 w-5 flex-shrink-0" />
-                <p className="text-sm font-medium">{error}</p>
-              </div>
+              <p className="text-sm text-red-600 text-center">{error}</p>
             )}
 
-            {/* Login Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg hover:shadow-xl"
-            >
-              <div className="flex items-center justify-center space-x-2">
-                {loading ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
-                    <span>Signing in...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Sign In</span>
-                    <ArrowRight className="h-5 w-5" />
-                  </>
-                )}
-              </div>
-            </button>
-          </form>
+            <div className="flex flex-col items-center justify-center pt-4">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+              />
+            </div>
 
-          {/* Footer */}
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
-              <a 
-                href="/signup" 
-                className="font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200 hover:underline"
-              >
-                Create one here
-              </a>
-            </p>
-          </div>
-        </div>
-
-        {/* Additional Info */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-gray-500">
-            By signing in, you agree to our{" "}
-            <a href="#" className="text-blue-600 hover:underline">Terms of Service</a>
-            {" "}and{" "}
-            <a href="#" className="text-blue-600 hover:underline">Privacy Policy</a>
-          </p>
-        </div>
+            <div className="text-center text-sm mt-6">
+              <p className="text-gray-600">
+                Don't have an account?{" "}
+                <button
+                  onClick={() => router.push("/signup")}
+                  className="font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+                >
+                  Sign Up
+                </button>
+              </p>
+            </div>
+          </>
+        )}
       </div>
-    </div>
+    </main>
   );
-};
+}
