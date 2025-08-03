@@ -25,7 +25,7 @@ const Footer = () => {
             </div>
           <p className="text-sm">
             Trusted medical diagnostics with accurate results and advanced
-            technology. Serving hospitals, labs, and individuals since [Year].
+            technology. Serving hospitals, labs, and individuals since 2025.
           </p>
         </div>
 
