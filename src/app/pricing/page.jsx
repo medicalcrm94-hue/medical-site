@@ -258,26 +258,13 @@ export default function PriceListPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const TENANT_ID = "6873948b091b5b6f35eb092f";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Retrieve the token from localStorage
-        const token = localStorage.getItem("token");
-
-        // If no token is found, set an error and stop execution
-        if (!token) {
-          throw new Error("Authentication token not found. Please log in.");
-        }
-
         const response = await fetch(
-          "https://medical-deploy-784797008827.europe-west1.run.app/api/services",
-          {
-            headers: {
-              // Use the token from localStorage for authorization
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `https://medical-deploy-784797008827.europe-west1.run.app/api/web-auth/services?tenantId=${TENANT_ID}`
         );
 
         if (!response.ok) {
@@ -301,16 +288,14 @@ export default function PriceListPage() {
           throw new Error('Could not find the "Book a Test" service data.');
         }
       } catch (e) {
-        // Set any caught errors to the state
         setError(e.message);
       } finally {
-        // Stop the loading indicator
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures this effect runs only once on component mount
+  }, []); 
 
   // Filter products based on the search term
   const filteredProducts = products.filter((product) =>
