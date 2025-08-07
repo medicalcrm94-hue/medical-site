@@ -11,7 +11,7 @@ const Spinner = () => (
 
 export default function LoginPage() {
   const router = useRouter();
-  const TENANT_ID = "6873948b091b5b6f35eb092f";
+  const TENANT_ID = "68935132c1fa55f36f3a4105";
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export default function LoginPage() {
 
     try {
       const res = await axios.post(
-        "https://medical-deploy-784797008827.europe-west1.run.app/api/web-auth/google",
+        "http://localhost:8005/api/web-user/auth/google",
         {
           credential,
           tenantId: TENANT_ID,

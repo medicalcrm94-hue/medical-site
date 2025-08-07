@@ -17,7 +17,11 @@ const OrderForm = () => {
   const [quantities, setQuantities] = useState({});
   const [orders, setOrders] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [earnedPoints, setEarnedPoints] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [availablePoints, setAvailablePoints] = useState(0);
+  const [pointsError, setPointsError] = useState("");
+  const [pointsToApply, setPointsToApply] = useState(0); // New state for points to apply
   const [loading, setLoading] = useState(false);
   const [submitionLoading, setSubmitionLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("");
@@ -28,7 +32,6 @@ const OrderForm = () => {
   const [locations, setLocations] = useState([]);
   const [selectedGarments, setSelectedGarments] = useState([]);
   const [showCustomerDetails, setShowCustomerDetails] = useState(false);
-
   const [suggestions, setSuggestions] = useState({ name: [], phoneNumber: [] });
   const [showSuggestions, setShowSuggestions] = useState({
     name: false,
@@ -70,6 +73,45 @@ const OrderForm = () => {
 
   const [error, setError] = useState("");
 
+  const fetchAvailablePoints = async () => {
+    try {
+      const response = await api.get('api/web-user/points');
+      setAvailablePoints(response.data.points);
+    } catch (error) {
+      console.error("Error fetching available points:", error);
+      setPointsError("Failed to fetch available points");
+    }
+  };
+
+  const applyPoints = async (pointsToUse) => {
+    try {
+      const response = await api.post('api/web-user/apply-points', {
+        pointsToUse
+      });
+      setAvailablePoints(response.data.remainingPoints);
+      return true;
+    } catch (error) {
+      console.error("Error applying points:", error);
+      setPointsError("Failed to apply points");
+      return false;
+    }
+  };
+
+  const handlePointsChange = (e) => {
+    const points = parseInt(e.target.value) || 0;
+    if (points > availablePoints) {
+      setPointsError("Cannot apply more points than available");
+    } else if (points > totalPrice) {
+      setPointsError("Cannot apply points exceeding total price");
+    } else if (points < 0) {
+      setPointsError("Points cannot be negative");
+    } else {
+      setPointsError("");
+      setPointsToApply(points);
+      setFormData((prev) => ({ ...prev, discount: points.toString() }));
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -83,7 +125,6 @@ const OrderForm = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Combine first and last name for the main name field
     if (name === "firstName" || name === "lastName") {
       const fullName = `${formData.firstName || ""} ${
         formData.lastName || ""
@@ -96,7 +137,6 @@ const OrderForm = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Set addressLine1 as the main address
     if (name === "addressLine1") {
       setFormData((prev) => ({ ...prev, address: value }));
     }
@@ -112,7 +152,6 @@ const OrderForm = () => {
       address: suggestion.address,
       addressLine1: suggestion.address,
     });
-
     setShowSuggestions({ name: false, phoneNumber: false });
   };
 
@@ -123,7 +162,6 @@ const OrderForm = () => {
       const response = await api.get(`api/orders/search`, {
         params: { query, field },
       });
-
       setSuggestions((prev) => ({ ...prev, [field]: response.data }));
       setShowSuggestions((prev) => ({ ...prev, [field]: true }));
     } catch (error) {
@@ -185,26 +223,10 @@ const OrderForm = () => {
   const processAssign = async (orderId) => {
     try {
       const process = {
-        process1: {
-          userId: "null",
-          status: "Pending",
-          timing: null,
-        },
-        process2: {
-          userId: "null",
-          status: "Pending",
-          timing: null,
-        },
-        process3: {
-          userId: "null",
-          status: "Pending",
-          timing: null,
-        },
-        process4: {
-          userId: "null",
-          status: "Pending",
-          timing: null,
-        },
+        process1: { userId: "null", status: "Pending", timing: null },
+        process2: { userId: "null", status: "Pending", timing: null },
+        process3: { userId: "null", status: "Pending", timing: null },
+        process4: { userId: "null", status: "Pending", timing: null },
       };
       await api.post(`api/processes/order-process`, {
         orderId: orderId,
@@ -235,8 +257,7 @@ const OrderForm = () => {
   };
 
   const fetchProducts = async (categoryId, categoryName) => {
-    selectedProduct.productName = "";
-    selectedProduct.units = "";
+    setSelectedProduct({ productName: "", units: "" });
     try {
       const response = await api.get(`api/services/service_id/${categoryId}`);
       setProducts(response.data.products);
@@ -249,6 +270,7 @@ const OrderForm = () => {
   const removeProduct = (index) => {
     if (index < 0 || index >= selectedProducts.length) return;
 
+    const removedProduct = selectedProducts[index];
     const updatedProducts = selectedProducts.filter((_, i) => i !== index);
     const updatedFormData = {
       ...formData,
@@ -259,12 +281,13 @@ const OrderForm = () => {
       garmentDetails: formData.garmentDetails.filter((_, i) => i !== index),
     };
 
-    const removedProduct = selectedProducts[index];
     const newTotalPrice = totalPrice - removedProduct.totalPrice;
+    const newTotalPoints = earnedPoints - removedProduct.totalPoints;
 
     setSelectedProducts(updatedProducts);
     setFormData(updatedFormData);
     setTotalPrice(newTotalPrice);
+    setEarnedPoints(newTotalPoints);
   };
 
   const addProduct = () => {
@@ -272,14 +295,18 @@ const OrderForm = () => {
       (prod) => prod.productName === selectedProduct.productName
     );
     const pricePerUnit = product ? product.price : 0;
+    const pointsPerUnit = product.points;
     const productTotalPrice = pricePerUnit * selectedProduct.units;
+    const productTotalPoints = pointsPerUnit * selectedProduct.units;
 
     const newProduct = {
       categoryId: category.categoryId,
       productName: selectedProduct.productName,
       units: selectedProduct.units,
       pricePerUnit,
+      pointsPerUnit,
       totalPrice: productTotalPrice,
+      totalPoints: productTotalPoints,
     };
 
     formData.category.push(category.categoryName);
@@ -288,6 +315,7 @@ const OrderForm = () => {
 
     setSelectedProducts([...selectedProducts, newProduct]);
     setTotalPrice(totalPrice + productTotalPrice);
+    setEarnedPoints(earnedPoints + productTotalPoints);
 
     const selSubproDetails = selectedSubProducts.map((product) => {
       return product.label.props.children[0];
@@ -388,15 +416,23 @@ const OrderForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitionLoading(true);
+    setError("");
+    setPointsError("");
+
+    if (pointsError) {
+      setSubmitionLoading(false);
+      return;
+    }
 
     const newOrderId =
       orders.length !== 0
         ? generateNewOrderId(orders[0].orderId)
         : generateNewOrderId("0");
-    const finalPrice = totalPrice - Number(formData.discount);
+
+    const finalPrice = totalPrice - pointsToApply;
 
     try {
-      await api.post(`api/orders`, {
+      const orderPayload = {
         orderId: newOrderId,
         name: formData.name,
         phoneNumber: formData.phoneNumber,
@@ -412,15 +448,29 @@ const OrderForm = () => {
         mode: formData.mode,
         paymentStatus: formData.paymentStatus,
         totalPrice: finalPrice,
+        earnedPoints: earnedPoints,
         delivery: formData.delivery,
-        discount: formData.discount,
-      });
+        discount: pointsToApply.toString(),
+        pointsUsed: pointsToApply,
+      };
 
-      // Now, call the other functions with the newOrderId
+      // 1. Create the main order
+      await api.post(`api/orders`, orderPayload);
+
+      // 2. Apply points if any were used
+      if (pointsToApply > 0) {
+        const pointsApplied = await applyPoints(pointsToApply);
+        if (!pointsApplied) {
+          throw new Error("Failed to apply points");
+        }
+      }
+
+      // 3. Call other related functions
       await createQrProcessUnits(newOrderId, formData.units, formData.subUnits);
       await saveCustomerDetails(newOrderId);
       await processAssign(newOrderId);
 
+      // 4. Reset the form and state
       setFormData({
         orderId: "",
         name: "",
@@ -454,16 +504,27 @@ const OrderForm = () => {
         dateOfBirth: "",
       });
 
+      setPointsToApply(0);
       fetchOrders();
       setSelectedProducts([]);
+      setEarnedPoints(0);
       setTotalPrice(0);
       setShowForm(false);
-      setError("");
-    } catch (err) {
-      setError("Failed to submit order");
-      console.error(err); // It's a good practice to log the actual error
-    } finally {
+      fetchAvailablePoints();
+
       alert("Order Submitted Successfully");
+    } catch (err) {
+      let errorMessage = "An unexpected error occurred. Please try again.";
+
+      if (err.response && err.response.data && err.response.data.error) {
+        errorMessage = `Submission Failed: ${err.response.data.error}`;
+        console.error("Backend Validation Error:", err.response.data);
+      } else {
+        console.error("Request Error:", err.message);
+      }
+      
+      setError(errorMessage);
+    } finally {
       setSubmitionLoading(false);
     }
   };
@@ -500,14 +561,9 @@ const OrderForm = () => {
   const CustomMultiValueRemove = (props) => {
     const { innerProps } = props;
 
-    const handleRemove = (e) => {
-      e.stopPropagation();
-      innerProps.onClick();
-    };
-
     return (
       <components.MultiValueRemove {...props}>
-        <span onClick={handleRemove} style={{ cursor: "pointer" }}>
+        <span onClick={innerProps.onClick} style={{ cursor: "pointer" }}>
           ✕
         </span>
       </components.MultiValueRemove>
@@ -519,6 +575,7 @@ const OrderForm = () => {
     fetchOrders();
     fetchGarments();
     fetchLocations();
+    fetchAvailablePoints();
   }, []);
 
   useEffect(() => {
@@ -549,7 +606,7 @@ const OrderForm = () => {
         <ProtectedRoute>
           <form
             onSubmit={handleSubmit}
-            className="mb-4 p-6  rounded-lg shadow-md "
+            className="mb-4 p-6 rounded-lg shadow-md"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               <Select
@@ -710,6 +767,9 @@ const OrderForm = () => {
                         Total
                       </th>
                       <th className="py-2 px-4 border border-blue-200">
+                        Points
+                      </th>
+                      <th className="py-2 px-4 border border-blue-200">
                         Action
                       </th>
                     </tr>
@@ -736,6 +796,9 @@ const OrderForm = () => {
                           <td className="border border-blue-200 px-4 py-2">
                             ₹{prod.totalPrice.toFixed(2)}
                           </td>
+                          <td className="border border-blue-200 px-4 py-2 text-green-600 font-semibold">
+                            {prod.totalPoints}
+                          </td>
                           <td className="border border-blue-200 px-4 py-2">
                             <button
                               type="button"
@@ -750,28 +813,26 @@ const OrderForm = () => {
                     })}
                   </tbody>
                 </table>
+                <div className="mb-6">
+                  <label
+                    htmlFor="earnedPoints"
+                    className="block text-green-700 mb-1"
+                  >
+                    Total Earned Points
+                  </label>
+                  <input
+                    type="number"
+                    name="earnedPoints"
+                    value={earnedPoints}
+                    className="border border-green-300 p-2 rounded w-full bg-gray-100 font-bold text-green-800"
+                    readOnly
+                  />
+                </div>
               </div>
             )}
 
             {selectedProducts.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label
-                    htmlFor="discount"
-                    className="block text-blue-700 mb-1"
-                  >
-                    Discount*
-                  </label>
-                  <input
-                    type="number"
-                    name="discount"
-                    placeholder="Discount"
-                    value={formData.discount}
-                    onChange={handleChange}
-                    className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                    min="0"
-                  />
-                </div>
                 <div className="flex items-center">
                   <input
                     type="checkbox"
@@ -791,16 +852,56 @@ const OrderForm = () => {
             {selectedProducts.length > 0 && (
               <div className="mb-6">
                 <label
+                  htmlFor="availablePoints"
+                  className="block text-blue-700 mb-1"
+                >
+                  Available Points
+                </label>
+                <input
+                  type="number"
+                  name="availablePoints"
+                  value={availablePoints}
+                  className="border border-blue-300 p-2 rounded w-full bg-gray-100 font-bold text-blue-800"
+                  readOnly
+                />
+                {pointsError && <p className="text-red-500 mt-1">{pointsError}</p>}
+              </div>
+            )}
+
+            {selectedProducts.length > 0 && (
+              <div className="mb-6">
+                <label
+                  htmlFor="pointsToApply"
+                  className="block text-blue-700 mb-1"
+                >
+                  Points to Apply
+                </label>
+                <input
+                  type="number"
+                  name="pointsToApply"
+                  value={pointsToApply}
+                  onChange={handlePointsChange}
+                  placeholder="Enter points to apply"
+                  className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                  min="0"
+                  max={Math.min(availablePoints, totalPrice)}
+                />
+                {pointsError && <p className="text-red-500 mt-1">{pointsError}</p>}
+              </div>
+            )}
+
+            {selectedProducts.length > 0 && (
+              <div className="mb-6">
+                <label
                   htmlFor="totalPrice"
                   className="block text-blue-700 mb-1"
                 >
-                  Total Price
+                  Total Price (After Points Discount)
                 </label>
                 <input
                   type="number"
                   name="totalPrice"
-                  placeholder="Total Price"
-                  value={(totalPrice - Number(formData.discount)).toFixed(2)}
+                  value={(totalPrice - pointsToApply).toFixed(2)}
                   className="border border-blue-300 p-2 rounded w-full bg-gray-100 font-bold text-blue-800"
                   readOnly
                 />
@@ -974,7 +1075,6 @@ const OrderForm = () => {
                   onChange={handleAddressChange}
                   className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
                 />
-
                 <button
                   type="button"
                   onClick={() => setShowCustomerDetails(!showCustomerDetails)}
@@ -1133,61 +1233,16 @@ const OrderForm = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div>
-                <label htmlFor="mode" className="block text-blue-700 mb-1">
-                  Payment Mode*
-                </label>
-                <select
-                  name="mode"
-                  value={formData.mode}
-                  onChange={handleChange}
-                  className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                  required
-                >
-                  <option disabled value="">
-                    Select Payment Mode
-                  </option>
-                  <option value="Cash">Cash</option>
-                  <option value="Credit Card">Credit Card</option>
-                  <option value="Debit Card">Debit Card</option>
-                  <option value="UPI">UPI</option>
-                  <option value="Net Banking">Net Banking</option>
-                </select>
-              </div>
-              {/* THIS IS THE NEW DROPDOWN */}
-              <div>
-                <label
-                  htmlFor="paymentStatus"
-                  className="block text-blue-700 mb-1"
-                >
-                  Payment Status*
-                </label>
-                <select
-                  name="paymentStatus"
-                  value={formData.paymentStatus}
-                  onChange={handleChange}
-                  className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                  required
-                >
-                  <option disabled value="">
-                    Select Payment Status
-                  </option>
-                  <option value="Paid">Paid</option>
-                  <option value="Unpaid">Unpaid</option>
-                  <option value="Pending">Pending</option>
-                </select>
-              </div>
-            </div>
-
             <button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md transition duration-300 w-full"
+              disabled={pointsError !== ""}
             >
               Submit Order
             </button>
 
             {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+            {pointsError && <p className="text-red-500 mt-4 text-center">{pointsError}</p>}
           </form>
         </ProtectedRoute>
       )}

@@ -258,44 +258,42 @@ export default function PriceListPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const TENANT_ID = "6873948b091b5b6f35eb092f";
+  const TENANT_ID = "68935132c1fa55f36f3a4105";
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://medical-deploy-784797008827.europe-west1.run.app/api/web-auth/services?tenantId=${TENANT_ID}`
-        );
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8005/api/web-user/services?tenantId=${TENANT_ID}`
+      );
 
-        if (!response.ok) {
-          // Handle specific HTTP errors
-          if (response.status === 401) {
-            throw new Error(
-              "Authorization failed. Please check your login credentials."
-            );
-          }
-          throw new Error(`HTTP error! Status: ${response.status}`);
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Authorization failed. Please check your login credentials.");
         }
-
-        const data = await response.json();
-        const bookATestService = data.find(
-          (service) => service.serviceName === "Book a Test"
-        );
-
-        if (bookATestService && bookATestService.products) {
-          setProducts(bookATestService.products);
-        } else {
-          throw new Error('Could not find the "Book a Test" service data.');
-        }
-      } catch (e) {
-        setError(e.message);
-      } finally {
-        setLoading(false);
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
 
-    fetchData();
-  }, []); 
+      const data = await response.json();
+      const bookATestService = data.find(
+        (service) => service.serviceName === "Book a Test"
+      );
+
+      if (bookATestService && bookATestService.products) {
+        setProducts(bookATestService.products);
+      } else {
+        throw new Error('Could not find the "Book a Test" service data.');
+      }
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
   // Filter products based on the search term
   const filteredProducts = products.filter((product) =>
@@ -354,6 +352,12 @@ export default function PriceListPage() {
                 >
                   Price (INR)
                 </th>
+                <th
+                  scope="col"
+                  className="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Points
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -364,6 +368,9 @@ export default function PriceListPage() {
                   </td>
                   <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-blue-900 font-semibold text-sm sm:text-base">
                     ₹{product.price}
+                  </td>
+                  <td className="px-4 sm:px-6 py-4 whitespace-nowrap text-blue-900 font-semibold text-sm sm:text-base">
+                    {product.points}
                   </td>
                 </tr>
               ))}
