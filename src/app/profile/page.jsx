@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import api from '../../api/axios';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState(null);
@@ -48,6 +49,7 @@ export default function ProfilePage() {
   );
 
   return (
+    <ProtectedRoute>
     <div className="min-h-screen bg-blue-50 py-8 px-4 mt-12">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
@@ -199,5 +201,6 @@ export default function ProfilePage() {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 }

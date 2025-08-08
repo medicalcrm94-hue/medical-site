@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, LogOut } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -19,38 +20,42 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
-    window.location.href = "/";
+    router.push("/"); // Use router.push for client-side navigation
   };
 
   const isActive = (href) => pathname === href;
 
-  // Compact nav links with shorter text
+  // Nav links with conditional inclusion based on login status
   const navLinks = [
     { href: "/", text: "Home" },
     { href: "/about", text: "About" },
     { href: "/services", text: "Services" },
     { href: "/pricing", text: "Pricing" },
-    { href: "/book", text: "Book" },
-    { href: "/reports", text: "Reports" },
-    // { href: "/medicine-exchange", text: "Exchange" },
+    ...(isLoggedIn
+      ? [
+          { href: "/book", text: "Book" },
+          { href: "/reports", text: "Reports" },
+          { href: "/profile", text: "Profile" },
+        ]
+      : []),
     { href: "/contact", text: "Contact" },
-    { href: "/profile", text: "Profile" },
   ];
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
-        <div className="flex items-center justify-between h-12 sm:h-14">
+        <div className="flex items-center justify-between h-16 sm:h-20">
+
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="h-16 w-20 object-cover"
+>
             <Link href="/">
-              <img
-                src="/logo.jpg"
-                height={400}
-                width={400}
-                alt="Company Logo"
-                className="h-20 w-20 object-cover"
-              />
+            <img
+  src="/logo.jpg"
+  alt="Company Logo"
+  className="h-20 w-20 object-cover"
+/>
+
             </Link>
           </div>
 
@@ -86,28 +91,30 @@ const Navbar = () => {
                 {link.text}
               </Link>
             ))}
-            <div className="relative">
-              <button
-                onClick={toggleMenu}
-                className="px-2 py-1 text-xs font-medium rounded-md transition-all duration-200 text-gray-700 hover:text-blue-700 hover:bg-blue-50"
-              >
-                More
-              </button>
-              {isOpen && (
-                <div className="absolute right-0 mt-1 w-32 bg-white rounded-md shadow-lg py-1 z-50">
-                  {navLinks.slice(5).map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block px-3 py-1 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {link.text}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            {navLinks.length > 5 && (
+              <div className="relative">
+                <button
+                  onClick={toggleMenu}
+                  className="px-2 py-1 text-xs font-medium rounded-md transition-all duration-200 text-gray-700 hover:text-blue-700 hover:bg-blue-50"
+                >
+                  More
+                </button>
+                {isOpen && (
+                  <div className="absolute right-0 mt-1 w-32 bg-white rounded-md shadow-lg py-1 z-50">
+                    {navLinks.slice(5).map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="block px-3 py-1 text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.text}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Right Side: Only Logout Button when logged in */}

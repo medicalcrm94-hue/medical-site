@@ -21,7 +21,7 @@ const OrderForm = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [availablePoints, setAvailablePoints] = useState(0);
   const [pointsError, setPointsError] = useState("");
-  const [pointsToApply, setPointsToApply] = useState(0); // New state for points to apply
+  const [pointsToApply, setPointsToApply] = useState(); // New state for points to apply
   const [loading, setLoading] = useState(false);
   const [submitionLoading, setSubmitionLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("");
@@ -75,7 +75,7 @@ const OrderForm = () => {
 
   const fetchAvailablePoints = async () => {
     try {
-      const response = await api.get('api/web-user/points');
+      const response = await api.get("api/web-user/points");
       setAvailablePoints(response.data.points);
     } catch (error) {
       console.error("Error fetching available points:", error);
@@ -85,8 +85,8 @@ const OrderForm = () => {
 
   const applyPoints = async (pointsToUse) => {
     try {
-      const response = await api.post('api/web-user/apply-points', {
-        pointsToUse
+      const response = await api.post("api/web-user/apply-points", {
+        pointsToUse,
       });
       setAvailablePoints(response.data.remainingPoints);
       return true;
@@ -98,17 +98,24 @@ const OrderForm = () => {
   };
 
   const handlePointsChange = (e) => {
-    const points = parseInt(e.target.value) || 0;
-    if (points > availablePoints) {
-      setPointsError("Cannot apply more points than available");
-    } else if (points > totalPrice) {
-      setPointsError("Cannot apply points exceeding total price");
-    } else if (points < 0) {
-      setPointsError("Points cannot be negative");
-    } else {
+    const value = parseInt(e.target.value, 10);
+    let maxAllowed =
+      totalPrice >= 500
+        ? Math.min(availablePoints, 200)
+        : Math.min(availablePoints, totalPrice);
+
+    if (isNaN(value)) {
+      setPointsToApply();
       setPointsError("");
-      setPointsToApply(points);
-      setFormData((prev) => ({ ...prev, discount: points.toString() }));
+      return;
+    }
+
+    if (value > maxAllowed) {
+      setPointsToApply(value); // still update so input reflects what user typed
+      setPointsError(`You can apply up to ${maxAllowed} points.`);
+    } else {
+      setPointsToApply(value);
+      setPointsError("");
     }
   };
 
@@ -522,7 +529,7 @@ const OrderForm = () => {
       } else {
         console.error("Request Error:", err.message);
       }
-      
+
       setError(errorMessage);
     } finally {
       setSubmitionLoading(false);
@@ -864,7 +871,22 @@ const OrderForm = () => {
                   className="border border-blue-300 p-2 rounded w-full bg-gray-100 font-bold text-blue-800"
                   readOnly
                 />
-                {pointsError && <p className="text-red-500 mt-1">{pointsError}</p>}
+                {pointsError && (
+                  <p className="text-red-500 mt-1">{pointsError}</p>
+                )}
+              </div>
+            )}
+            {selectedProducts.length > 0 && (
+              <div className="mb-4">
+                <label className="block text-blue-700 mb-1">
+                  Total Price (Before Discount)
+                </label>
+                <input
+                  type="number"
+                  value={totalPrice}
+                  readOnly
+                  className="border border-gray-300 p-2 rounded w-full bg-gray-100 cursor-not-allowed"
+                />
               </div>
             )}
 
@@ -883,10 +905,15 @@ const OrderForm = () => {
                   onChange={handlePointsChange}
                   placeholder="Enter points to apply"
                   className="border border-blue-300 p-2 rounded w-full focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
-                  min="0"
-                  max={Math.min(availablePoints, totalPrice)}
+                  max={
+                    totalPrice >= 500
+                      ? Math.min(availablePoints, 200)
+                      : Math.min(availablePoints, totalPrice)
+                  }
                 />
-                {pointsError && <p className="text-red-500 mt-1">{pointsError}</p>}
+                {pointsError && (
+                  <p className="text-red-500 mt-1">{pointsError}</p>
+                )}
               </div>
             )}
 
@@ -1242,7 +1269,9 @@ const OrderForm = () => {
             </button>
 
             {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
-            {pointsError && <p className="text-red-500 mt-4 text-center">{pointsError}</p>}
+            {pointsError && (
+              <p className="text-red-500 mt-4 text-center">{pointsError}</p>
+            )}
           </form>
         </ProtectedRoute>
       )}
